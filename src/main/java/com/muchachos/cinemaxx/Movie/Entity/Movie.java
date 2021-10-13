@@ -17,13 +17,22 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Column(length = 200,nullable = false)
     String title;
 
     @Column(length = 20,nullable = false)
     String rating;
+
+    public Movie(Integer id, String title, String rating, String cast, String info, int duration) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+        this.cast = cast;
+        this.info = info;
+        this.duration = duration;
+    }
 
     @Column(length = 1024,nullable = false)
     String cast;

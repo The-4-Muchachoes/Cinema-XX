@@ -25,4 +25,8 @@ public class Cinema {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cinema_id")
     private List<Theater> theaters = new ArrayList<>();
+
+    public Cinema(String name){
+        this.name=name;
+    }
 }
