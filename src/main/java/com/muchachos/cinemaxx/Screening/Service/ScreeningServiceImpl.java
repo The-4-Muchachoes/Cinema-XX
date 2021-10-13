@@ -20,14 +20,17 @@ import java.util.List;
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
 
-    @Autowired
     ScreeningRepo screeningRepo;
 
-    @Autowired
     MovieRepo movieRepo;
 
-    @Autowired
     TheaterRepo theaterRepo;
+
+    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo, TheaterRepo theaterRepo) {
+        this.screeningRepo = screeningRepo;
+        this.movieRepo = movieRepo;
+        this.theaterRepo = theaterRepo;
+    }
 
     @Override
     public List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate date) {
@@ -37,13 +40,13 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         // Database stores a timestamp so the below datetime objects are necessary to query a single date
         LocalDateTime today = date.atStartOfDay();
-        LocalDateTime tomorrow = today.plusHours(24);
+        LocalDateTime tomorrow = today.plusHours(23).plusMinutes(59);
 
         if (theaters.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         // Add screenings per theater hall to list
         for (Theater theater : theaters) {
-            screenings.addAll(screeningRepo.findAllByStartTimeBetweenAAndTheater_Id(today, tomorrow, theater.getId()));
+            screenings.addAll(screeningRepo.findAllByStartTimeBetweenAndTheater_Id(today, tomorrow, theater.getId()));
         }
 
         // Create DTOs per screening and add them to list

@@ -67,8 +67,8 @@ public class TestDataMaker {
         List<Integer> ids = new ArrayList<>();
 
         for (Theater theater : theaterRepo.findAll()) {
-            ids.add(screeningRepo.save(new Screening(null, LocalDateTime.now(), movieRepo.getById(0), theater)).getId());
             ids.add(screeningRepo.save(new Screening(null, LocalDateTime.now(), movieRepo.getById(1), theater)).getId());
+            ids.add(screeningRepo.save(new Screening(null, LocalDateTime.now(), movieRepo.getById(2), theater)).getId());
         }
 
         return ids;

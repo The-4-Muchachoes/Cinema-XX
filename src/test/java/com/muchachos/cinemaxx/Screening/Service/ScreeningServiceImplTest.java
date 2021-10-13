@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Screening.Service;
 
+import com.muchachos.cinemaxx.Cinema.Entity.Cinema;
 import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
@@ -31,11 +32,12 @@ class ScreeningServiceImplTest {
     @Autowired
     ScreeningRepo screeningRepo;
 
-    @Autowired
-    ScreeningService screeningService;
+    ScreeningServiceImpl screeningService;
 
     @BeforeEach
     public void setupData() {
+        screeningService = new ScreeningServiceImpl(screeningRepo, movieRepo, theaterRepo);
+
         TestDataMaker.makeMovies(movieRepo);
         TestDataMaker.makeCinemas(cinemaRepo);
         TestDataMaker.makeTheaters(theaterRepo, cinemaRepo);
@@ -44,7 +46,7 @@ class ScreeningServiceImplTest {
 
     @Test
     void getTitleTimeAndRatingByCinemaAndDate() {
-        List<ScreeningDTO> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(0, LocalDate.now());
+        List<ScreeningDTO> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now());
         assertEquals(4, dtos.size());
         assertEquals("Batman", dtos.get(0).getTitle());
     }
