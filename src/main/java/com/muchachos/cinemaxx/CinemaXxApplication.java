@@ -15,7 +15,7 @@ public class CinemaXxApplication {
     public static void main(String[] args) {
 
         Map<String, String> env = System.getenv();
-        env.forEach((k, v) -> logger.info(k + ":" + v));
+        env.forEach((k, v) -> System.out.println(k + ":" + v));
 
         SpringApplication.run(CinemaXxApplication.class, args);
     }
