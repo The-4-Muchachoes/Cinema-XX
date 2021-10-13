@@ -13,6 +13,7 @@ public class CinemaXxApplication {
     static Logger logger = LoggerFactory.getLogger(CinemaXxApplication.class);
 
     public static void main(String[] args) {
+        System.out.println("SEARCHFORME");
 
         Map<String, String> env = System.getenv();
         env.forEach((k, v) -> System.out.println(k + ":" + v));
