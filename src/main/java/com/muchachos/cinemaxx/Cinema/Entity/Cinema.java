@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Cinema.Entity;
 
+import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,9 @@ public class Cinema {
     int id;
 
     @Column(length = 50,nullable = false)
-    String CinemaName;
+    String name;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cinema_id")
+    private List<Theater> theaters = new ArrayList<>();
 }

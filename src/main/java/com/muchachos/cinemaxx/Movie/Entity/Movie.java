@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Movie.Entity;
 
+import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,10 @@ public class Movie {
 
     @Column(nullable = false)
     int duration;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "movie_id")
+    private List<Screening> screenings = new ArrayList<>();
 
 
 }
