@@ -1,15 +1,15 @@
 package com.muchachos.cinemaxx.Screening.Controller;
 
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTOWithTitleAndRating;
 import com.muchachos.cinemaxx.Screening.Service.ScreeningServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -23,17 +23,17 @@ public class ScreeningController {
     private Iterable<ScreeningDTOWithTitleAndRating> getScreeningsByCinemaAndDate(@RequestParam int cinemaId, @RequestParam String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate d = LocalDate.parse(date, formatter);
-        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d);
+        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d, null);
     }
 
     @GetMapping(path = "/{cinema_id}/between_dates")
-    private Iterable<ScreeningDTO> getScreeningsByCinemaBetweenDates(@PathVariable int cinema_id,
+    private Iterable<ScreeningDTOWithTitleAndRating> getScreeningsByCinemaBetweenDates(@PathVariable int cinema_id,
                                                                      @RequestParam String startDate,
-                                                                     @RequestParam String endDate){
+                                                                     @RequestParam String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate d1 = LocalDate.parse(startDate, formatter);
         LocalDate d2 = LocalDate.parse(endDate, formatter);
-        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinema_id,d1,d2);
+        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinema_id, d1, d2);
 
     }
     @PostMapping

@@ -45,7 +45,7 @@ class ScreeningServiceImplTest {
 
     @Test
     void getTitleTimeAndRatingByCinemaAndDate() {
-        List<ScreeningDTOWithTitleAndRating> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now());
+        List<ScreeningDTOWithTitleAndRating> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now(), null);
         assertEquals(4, dtos.size());
         assertEquals("Batman", dtos.get(0).getTitle());
     }
