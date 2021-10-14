@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ScreeningDTO {
+public class ScreeningDTOWithTitleAndRating {
 
     Integer id;
-    Integer movieId;
-    Integer theaterId;
     LocalDateTime startTime;
+    String title;
+    String rating;
 }

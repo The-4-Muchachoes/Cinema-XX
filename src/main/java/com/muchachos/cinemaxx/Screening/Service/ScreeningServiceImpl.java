@@ -3,12 +3,12 @@ package com.muchachos.cinemaxx.Screening.Service;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTOWithTitleAndRating;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
@@ -28,6 +27,8 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     TheaterRepo theaterRepo;
 
+    ModelMapper modelMapper = new ModelMapper();
+
     public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo, TheaterRepo theaterRepo) {
         this.screeningRepo = screeningRepo;
         this.movieRepo = movieRepo;
@@ -35,10 +36,10 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate date) {
+    public List<ScreeningDTOWithTitleAndRating> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate date) {
         List<Theater> theaters = theaterRepo.findAllByCinema_Id(cinemaId);
         List<Screening> screenings = new ArrayList<>();
-        List<ScreeningDTO> screeningDTOS = new ArrayList<>();
+        List<ScreeningDTOWithTitleAndRating> screeningDTOS = new ArrayList<>();
 
         // Database stores a timestamp so the below datetime objects are necessary to query a single date
         LocalDateTime today = date.atStartOfDay();
@@ -58,12 +59,12 @@ public class ScreeningServiceImpl implements ScreeningService {
                             .getMovie()
                             .getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            screeningDTOS.add(new ScreeningDTO(null, screening.getStartTime(), movie.getTitle(), movie.getRating()));
+            screeningDTOS.add(new ScreeningDTOWithTitleAndRating(null, screening.getStartTime(), movie.getTitle(), movie.getRating()));
         }
 
         return screeningDTOS;
     }
-    public ScreeningDTO addScreening(int movie_id, int theater_id, LocalDateTime startTime ) {
+    public ScreeningDTOWithTitleAndRating addScreening(int movie_id, int theater_id, LocalDateTime startTime ) {
         Movie m = movieRepo.findById(movie_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Theater t = theaterRepo.findById(theater_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -71,10 +72,17 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         Screening s = new Screening(null, startTime, m,t);
         Screening  saved = screeningRepo.save(s);
-        return  new ScreeningDTO(saved.getId(),saved.getStartTime(), saved.getMovie().getTitle(), saved.getMovie().getRating());
+        return  new ScreeningDTOWithTitleAndRating(saved.getId(),saved.getStartTime(), saved.getMovie().getTitle(), saved.getMovie().getRating());
 
+    }
 
+    public ScreeningDTO editScreening(ScreeningDTO dto) {
+        if (dto.getId() == null || dto.getStartTime() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        Screening screening = screeningRepo.findById(dto.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        screening.setStartTime(dto.getStartTime());
 
-
+        return modelMapper.map(screeningRepo.save(screening), ScreeningDTO.class);
     }
 }
