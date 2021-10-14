@@ -43,8 +43,12 @@ public class ScreeningServiceImpl implements ScreeningService {
         List<ScreeningDTOWithTitleAndRating> screeningDTOS = new ArrayList<>();
 
         // Database stores a timestamp so the below datetime objects are necessary to query a single date
-        LocalDateTime today = date.atStartOfDay();
-        LocalDateTime tomorrow = today.plusHours(23).plusMinutes(59);
+        LocalDateTime today = startDate.atStartOfDay();
+        LocalDateTime tomorrow;
+        if (endDate == null)
+             tomorrow = today.plusHours(23).plusMinutes(59);
+        else
+            tomorrow = endDate.atTime(23,59);
 
         if (theaters.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
