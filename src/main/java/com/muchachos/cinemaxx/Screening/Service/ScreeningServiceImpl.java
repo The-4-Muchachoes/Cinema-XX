@@ -7,6 +7,7 @@ import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
@@ -60,5 +62,19 @@ public class ScreeningServiceImpl implements ScreeningService {
         }
 
         return screeningDTOS;
+    }
+    public ScreeningDTO addScreening(int movie_id, int theater_id, LocalDateTime startTime ) {
+        Movie m = movieRepo.findById(movie_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Theater t = theaterRepo.findById(theater_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+
+
+        Screening s = new Screening(null, startTime, m,t);
+        Screening  saved = screeningRepo.save(s);
+        return  new ScreeningDTO(saved.getId(),saved.getStartTime(), saved.getMovie().getTitle(), saved.getMovie().getRating());
+
+
+
+
     }
 }
