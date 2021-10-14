@@ -38,7 +38,7 @@ public class ScreeningController {
     }
     @PostMapping
     private ScreeningDTOWithTitleAndRating addScreening(@RequestParam int movie_id, @RequestParam  int theater_id, @RequestParam String date, @RequestParam String time) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyyThh:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm");
         LocalDateTime d = LocalDateTime.parse(date+"T" + time, formatter);
         return screeningService.addScreening(movie_id,theater_id,d);
 
