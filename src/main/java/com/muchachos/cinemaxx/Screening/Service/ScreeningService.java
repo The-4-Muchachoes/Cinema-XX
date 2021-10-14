@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ScreeningService {
 
-    List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate date);
+    List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate);
 }

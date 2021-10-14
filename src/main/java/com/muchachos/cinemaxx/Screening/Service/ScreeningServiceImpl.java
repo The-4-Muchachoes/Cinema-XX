@@ -7,7 +7,6 @@ import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,14 +32,18 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate date) {
+    public List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate) {
         List<Theater> theaters = theaterRepo.findAllByCinema_Id(cinemaId);
         List<Screening> screenings = new ArrayList<>();
         List<ScreeningDTO> screeningDTOS = new ArrayList<>();
 
         // Database stores a timestamp so the below datetime objects are necessary to query a single date
-        LocalDateTime today = date.atStartOfDay();
-        LocalDateTime tomorrow = today.plusHours(23).plusMinutes(59);
+        LocalDateTime today = startDate.atStartOfDay();
+        LocalDateTime tomorrow;
+        if (endDate == null)
+             tomorrow = today.plusHours(23).plusMinutes(59);
+        else
+            tomorrow = endDate.atTime(23,59);
 
         if (theaters.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
