@@ -14,11 +14,10 @@ import java.time.LocalDateTime;
 public class Screening {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Column
-    LocalDateTime StartTime;
-
+    LocalDateTime startTime;
 
     @ManyToOne
     Movie movie;

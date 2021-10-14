@@ -17,7 +17,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Column(length = 200,nullable = false)
     String title;
@@ -38,5 +38,12 @@ public class Movie {
     @JoinColumn(name = "movie_id")
     private List<Screening> screenings = new ArrayList<>();
 
-
+    public Movie(Integer id, String title, String rating, String cast, String info, int duration) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+        this.cast = cast;
+        this.info = info;
+        this.duration = duration;
+    }
 }

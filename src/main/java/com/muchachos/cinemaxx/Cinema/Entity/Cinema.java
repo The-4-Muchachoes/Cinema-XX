@@ -17,7 +17,7 @@ public class Cinema {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Column(length = 50,nullable = false)
     String name;
@@ -25,4 +25,9 @@ public class Cinema {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cinema_id")
     private List<Theater> theaters = new ArrayList<>();
+
+    public Cinema(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
