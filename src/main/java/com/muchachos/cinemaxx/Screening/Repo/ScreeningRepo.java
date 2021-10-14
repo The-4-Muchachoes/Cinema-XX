@@ -11,4 +11,5 @@ import java.util.List;
 public interface ScreeningRepo extends JpaRepository<Screening,Integer> {
 
     List<Screening> findAllByStartTimeBetweenAndTheater_Id(LocalDateTime date, LocalDateTime tomorrow, int theaterId);
+
 }

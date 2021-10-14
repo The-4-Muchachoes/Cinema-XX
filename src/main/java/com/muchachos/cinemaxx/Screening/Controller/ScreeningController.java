@@ -26,4 +26,14 @@ public class ScreeningController {
         return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d, null);
     }
 
+    @GetMapping
+    private Iterable<ScreeningDTO> getScreeningsByCinemaBetweenDates(@RequestParam int cinemaId,
+                                                                     @RequestParam String startDate,
+                                                                     @RequestParam String endDate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate d1 = LocalDate.parse(startDate, formatter);
+        LocalDate d2 = LocalDate.parse(endDate, formatter);
+        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId,d1,d2);
+
+    }
 }
