@@ -64,11 +64,10 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         return screeningDTOS;
     }
+
     public ScreeningDTOWithTitleAndRating addScreening(int movie_id, int theater_id, LocalDateTime startTime ) {
         Movie m = movieRepo.findById(movie_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Theater t = theaterRepo.findById(theater_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-
 
         Screening s = new Screening(null, startTime, m,t);
         Screening  saved = screeningRepo.save(s);
