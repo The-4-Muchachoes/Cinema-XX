@@ -37,6 +37,7 @@ public class ScreeningController {
     private Iterable<ScreeningDTO>editScreening(@RequestParam int movie_id, @RequestParam int theater_id, @RequestParam String date, @RequestParam String time){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyyTh:mm");
         LocalDateTime e = LocalDateTime.parse(date+"T" + time, formatter);
+        return null;
 
     }
 
