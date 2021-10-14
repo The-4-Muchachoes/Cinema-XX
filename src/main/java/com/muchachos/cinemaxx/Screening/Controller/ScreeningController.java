@@ -23,7 +23,7 @@ public class ScreeningController {
     private Iterable<ScreeningDTO> getScreeningsByCinemaAndDate(@RequestParam int cinemaId, @RequestParam String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate d = LocalDate.parse(date, formatter);
-        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d);
+        return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d, null);
     }
 
 }
