@@ -46,13 +46,4 @@ public class Movie {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movie_id")
     private List<Screening> screenings = new ArrayList<>();
-
-    public Movie(Integer id, String title, String rating, String cast, String info, int duration) {
-        this.id = id;
-        this.title = title;
-        this.rating = rating;
-        this.cast = cast;
-        this.info = info;
-        this.duration = duration;
-    }
 }

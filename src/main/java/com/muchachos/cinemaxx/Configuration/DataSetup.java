@@ -30,17 +30,17 @@ public class DataSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Cinema cinema1 = cinemaRepo.save(new Cinema("Elton Jones"));
-        cinemaRepo.save(new Cinema("Big Joe"));
+        Cinema cinema1 = cinemaRepo.save(new Cinema(null, "Elton Jones"));
+        cinemaRepo.save(new Cinema(null, "Big Joe"));
 
-        Theater theater1=theaterRepo.save(new Theater(null,"Marriot"));
-        theaterRepo.save(new Theater(null,"Red"));
+        Theater theater1=theaterRepo.save(new Theater(null, "Marriot", cinema1));
+        theaterRepo.save(new Theater(null,"Red", cinema1));
 
         Movie movie1=movieRepo.save(new Movie
                 (null,"Ironman","12+","Brand Pit","Very good",95));
         movieRepo.save(new Movie(null,"Spiderman","12+","Cameron Diaz","Amazing",98));
 
-        Screening screening1=screeningRepo.save(new Screening(null, LocalDateTime.now()));
-        screeningRepo.save(new Screening(null,LocalDateTime.now()));
+        Screening screening1=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie1, theater1));
+        screeningRepo.save(new Screening(null, LocalDateTime.now(), movie1, theater1));
     }
 }
