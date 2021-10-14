@@ -41,4 +41,10 @@ public class ScreeningController {
     private ScreeningDTO editScreening(ScreeningDTO dto){
         return screeningService.editScreening(dto);
     }
+
+
+    @DeleteMapping(path = "{id}")
+    private ResponseEntity<?> deleteScreening(@PathVariable int id) {
+        return screeningService.deleteScreening(id);
+    }
 }

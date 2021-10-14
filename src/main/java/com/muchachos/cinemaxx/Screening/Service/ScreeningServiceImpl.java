@@ -10,6 +10,7 @@ import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -84,4 +85,13 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         return modelMapper.map(screeningRepo.save(screening), ScreeningDTO.class);
     }
+
+    public ResponseEntity<?> deleteScreening(int id) {
+
+        if (!screeningRepo.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        screeningRepo.deleteById(id);
+        if (!screeningRepo.existsById(id)) return ResponseEntity.noContent().build();
+        else throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
