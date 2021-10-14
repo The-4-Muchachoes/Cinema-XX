@@ -41,9 +41,4 @@ public class ScreeningController {
     private ScreeningDTO editScreening(ScreeningDTO dto){
         return screeningService.editScreening(dto);
     }
-
-    private ResponseEntity<?> test() {
-        return ResponseEntity.noContent().build();
-    }
-
 }
