@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Screening.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import lombok.*;
@@ -20,9 +21,10 @@ public class Screening {
     LocalDateTime startTime;
 
     @ManyToOne
+    @JsonIgnoreProperties("screenings")
     Movie movie;
 
     @ManyToOne
+    @JsonIgnoreProperties("screenings")
     Theater theater;
-
 }
