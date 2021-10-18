@@ -16,13 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name="theater")
 public class Theater {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(length = 50,nullable = false)
+    @Column(name="theater_name",length = 50, nullable = false)
     String name;
 
     @Column(nullable = false)
@@ -39,9 +40,11 @@ public class Theater {
     @JoinColumn(name = "theater_id")
     private List<Screening> screenings = new ArrayList<>();
 
-    public Theater(Integer id, String name, Cinema cinema) {
+    public Theater(Integer id, String name, int rows, int seats, Cinema cinema) {
         this.id = id;
         this.name = name;
+        this.rows = rows;
+        this.seats = seats;
         this.cinema = cinema;
     }
 }

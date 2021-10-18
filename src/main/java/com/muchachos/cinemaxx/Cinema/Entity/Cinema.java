@@ -14,13 +14,14 @@ import java.util.List;
 @Getter@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="cinema")
 public class Cinema {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(length = 50,nullable = false)
+    @Column(name="cinema_name",length = 50,nullable = false)
     String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

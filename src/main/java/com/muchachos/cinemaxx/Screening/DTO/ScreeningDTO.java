@@ -30,4 +30,11 @@ public class ScreeningDTO {
     TheaterDTO theater;
     @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
     LocalDateTime startTime;
+
+    public ScreeningDTO(Integer id, Integer movieId, Integer theaterId, LocalDateTime startTime) {
+        this.id = id;
+        this.movieId = movieId;
+        this.theaterId = theaterId;
+        this.startTime = startTime;
+    }
 }

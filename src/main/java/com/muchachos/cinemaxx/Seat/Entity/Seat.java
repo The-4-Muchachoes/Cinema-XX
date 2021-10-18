@@ -11,7 +11,9 @@ import javax.persistence.*;
 
 @Entity
 @Getter@Setter
-@NoArgsConstructor@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="seat")
 public class Seat {
     public Seat(Integer id, int row, int seatNo, boolean booked, Screening screening) {
         this.id = id;

@@ -15,6 +15,7 @@ import java.util.List;
 @Getter@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="booking")
 public class Booking {
 
     @Id

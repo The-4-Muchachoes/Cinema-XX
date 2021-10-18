@@ -50,8 +50,8 @@ public class TestDataMaker {
         List<Integer> ids = new ArrayList<>();
 
         for (Cinema cinema : cinemaRepo.findAll()) {
-            ids.add(theaterRepo.save(new Theater(null, "A", cinema)).getId());
-            ids.add(theaterRepo.save(new Theater(null, "B", cinema)).getId());
+            ids.add(theaterRepo.save(new Theater(null, "A",10,10 ,cinema)).getId());
+            ids.add(theaterRepo.save(new Theater(null, "B",12,12, cinema)).getId());
         }
 
         return ids;

@@ -14,6 +14,7 @@ import java.util.List;
 @Getter@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="movie")
 public class Movie {
 
     @Id

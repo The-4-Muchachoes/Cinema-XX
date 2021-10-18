@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="screening")
 public class Screening {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
