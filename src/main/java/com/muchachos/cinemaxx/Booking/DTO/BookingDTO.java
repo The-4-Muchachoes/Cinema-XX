@@ -2,6 +2,8 @@ package com.muchachos.cinemaxx.Booking.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
+import com.muchachos.cinemaxx.Seat.DTO.SeatDTO;
 import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -18,6 +20,8 @@ import java.util.List;
 public class BookingDTO {
 
     private Integer id;
-    private List<Integer> seats = new ArrayList<>();
-    private Integer screening;
+    private List <Integer> seatIds = new ArrayList<>();
+    private List<SeatDTO> seats = new ArrayList<>();
+    private Integer screeningId;
+    private ScreeningDTO screening;
 }

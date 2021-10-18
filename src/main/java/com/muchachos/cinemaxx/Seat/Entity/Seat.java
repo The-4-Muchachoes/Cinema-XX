@@ -15,19 +15,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name="seat")
 public class Seat {
-    public Seat(Integer id, int row, int seatNo, boolean booked, Screening screening) {
-        this.id = id;
-        this.row = row;
-        this.seatNo = seatNo;
-        this.booked = booked;
-        this.screening = screening;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(length = 3,nullable = false)
+    @Column(name="theater_row",length = 3,nullable = false)
     int row;
 
     @Column(length = 3,nullable = false)
@@ -41,4 +34,12 @@ public class Seat {
 
     @ManyToOne
     Screening screening;
+
+    public Seat(Integer id, int row, int seatNo, boolean booked, Screening screening) {
+        this.id = id;
+        this.row = row;
+        this.seatNo = seatNo;
+        this.booked = booked;
+        this.screening = screening;
+    }
 }

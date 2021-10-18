@@ -26,7 +26,7 @@ public class Theater {
     @Column(name="theater_name",length = 50, nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(name="theater_rows",nullable = false)
     int rows;
 
     @Column(nullable = false)

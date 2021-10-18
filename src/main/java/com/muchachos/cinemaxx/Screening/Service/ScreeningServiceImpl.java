@@ -12,6 +12,7 @@ import com.muchachos.cinemaxx.Theater.DTO.TheaterDTO;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,6 @@ import java.util.List;
 
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
-    SeatRepo seatRepo;
 
     ScreeningRepo screeningRepo;
 
@@ -32,12 +32,18 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     TheaterRepo theaterRepo;
 
-    ModelMapper modelMapper = new ModelMapper();
+    SeatRepo seatRepo;
 
-    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo, TheaterRepo theaterRepo) {
+    ModelMapper modelMapper;
+
+    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo, TheaterRepo theaterRepo, SeatRepo seatRepo) {
         this.screeningRepo = screeningRepo;
         this.movieRepo = movieRepo;
         this.theaterRepo = theaterRepo;
+        this.seatRepo = seatRepo;
+
+        modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
     @Override
@@ -81,8 +87,8 @@ public class ScreeningServiceImpl implements ScreeningService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         TheaterDTO theaterDTO = modelMapper.map(theater, TheaterDTO.class);
 
-        dto.setMovie(movieDTO);
-        dto.setTheater(theaterDTO);
+//        dto.setMovie(movieDTO);
+//        dto.setTheater(theaterDTO);
 
         Screening screening = screeningRepo.save(modelMapper.map(dto, Screening.class));
 

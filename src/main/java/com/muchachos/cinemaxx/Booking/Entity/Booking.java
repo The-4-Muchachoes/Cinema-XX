@@ -22,8 +22,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = false)
-    @JoinColumn(name="seat_id")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name="booking_id")
     private List <Seat> seats = new ArrayList<>();
 
     @ManyToOne
