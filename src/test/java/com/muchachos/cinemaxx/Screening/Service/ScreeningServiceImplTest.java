@@ -2,7 +2,7 @@ package com.muchachos.cinemaxx.Screening.Service;
 
 import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTOWithTitleAndRating;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import com.muchachos.cinemaxx.testUtils.TestDataMaker;
@@ -45,8 +45,8 @@ class ScreeningServiceImplTest {
 
     @Test
     void getTitleTimeAndRatingByCinemaAndDate() {
-        List<ScreeningDTOWithTitleAndRating> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now(), null);
+        List<ScreeningDTO> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now(), null);
         assertEquals(4, dtos.size());
-        assertEquals("Batman", dtos.get(0).getTitle());
+        assertEquals("Batman", dtos.get(0).getMovie().getTitle());
     }
 }

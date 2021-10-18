@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Movie.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,15 +26,6 @@ public class Movie {
     @Column(length = 20,nullable = false)
     String rating;
 
-    public Movie(Integer id, String title, String rating, String cast, String info, int duration) {
-        this.id = id;
-        this.title = title;
-        this.rating = rating;
-        this.cast = cast;
-        this.info = info;
-        this.duration = duration;
-    }
-
     @Column(length = 1024,nullable = false)
     String cast;
 
@@ -45,5 +37,15 @@ public class Movie {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movie_id")
-    private List<Screening> screenings = new ArrayList<>();
+    @JsonIgnoreProperties("movie")
+    List<Screening> screenings = new ArrayList<>();
+
+    public Movie(Integer id, String title, String rating, String cast, String info, int duration) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+        this.cast = cast;
+        this.info = info;
+        this.duration = duration;
+    }
 }

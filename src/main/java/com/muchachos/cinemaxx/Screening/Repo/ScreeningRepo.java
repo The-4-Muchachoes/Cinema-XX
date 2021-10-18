@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ScreeningRepo extends JpaRepository<Screening,Integer> {
 
-    List<Screening> findAllByStartTimeBetweenAndTheater_Id(LocalDateTime date, LocalDateTime tomorrow, int theaterId);
+    List<Screening> findAllByStartTimeBetweenAndTheater_IdOrderByStartTime(LocalDateTime date, LocalDateTime tomorrow, int theaterId);
 
 }

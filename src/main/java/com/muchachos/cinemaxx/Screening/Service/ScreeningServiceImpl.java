@@ -1,11 +1,12 @@
 package com.muchachos.cinemaxx.Screening.Service;
 
+import com.muchachos.cinemaxx.Movie.DTO.MovieDTO;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTOWithTitleAndRating;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Theater.DTO.TheaterDTO;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.modelmapper.ModelMapper;
@@ -37,12 +38,13 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public List<ScreeningDTOWithTitleAndRating> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate) {
+    public List<ScreeningDTO> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate) {
         List<Theater> theaters = theaterRepo.findAllByCinema_Id(cinemaId);
         List<Screening> screenings = new ArrayList<>();
-        List<ScreeningDTOWithTitleAndRating> screeningDTOS = new ArrayList<>();
+        List<ScreeningDTO> screeningDTOS = new ArrayList<>();
 
-        // Database stores a timestamp so the below datetime objects are necessary to query a single date
+        // If endTime is null returns all screening for the date of startTime, else between given dates
+        // endDate is inclusive
         LocalDateTime today = startDate.atStartOfDay();
         LocalDateTime tomorrow;
         if (endDate == null)
@@ -54,34 +56,47 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         // Add screenings per theater hall to list
         for (Theater theater : theaters) {
-            screenings.addAll(screeningRepo.findAllByStartTimeBetweenAndTheater_Id(today, tomorrow, theater.getId()));
+            screenings.addAll(screeningRepo.findAllByStartTimeBetweenAndTheater_IdOrderByStartTime(
+                    today, tomorrow, theater.getId())
+            );
         }
 
         // Create DTOs per screening and add them to list
         for (Screening screening : screenings) {
-            Movie movie = movieRepo.findById(
-                    screening
-                            .getMovie()
-                            .getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            screeningDTOS.add(new ScreeningDTOWithTitleAndRating(null, screening.getStartTime(), movie.getTitle(), movie.getRating()));
+            screeningDTOS.add(modelMapper.map(screening, ScreeningDTO.class));
         }
 
         return screeningDTOS;
     }
 
-    public ScreeningDTOWithTitleAndRating addScreening(int movie_id, int theater_id, LocalDateTime startTime ) {
-        Movie m = movieRepo.findById(movie_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Theater t = theaterRepo.findById(theater_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ScreeningDTO addScreening(ScreeningDTO dto) {
+        Movie movie = movieRepo.findById(dto.getMovieId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
 
-        Screening s = new Screening(null, startTime, m,t);
-        Screening  saved = screeningRepo.save(s);
-        return  new ScreeningDTOWithTitleAndRating(saved.getId(),saved.getStartTime(), saved.getMovie().getTitle(), saved.getMovie().getRating());
+        Theater theater = theaterRepo.findById(dto.getTheaterId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        TheaterDTO theaterDTO = modelMapper.map(theater, TheaterDTO.class);
 
+        dto.setMovie(movieDTO);
+        dto.setTheater(theaterDTO);
+
+        Screening screening = screeningRepo.save(modelMapper.map(dto, Screening.class));
+
+        // generate seats for the screening
+//        List<Seat> seats = new ArrayList<>();
+//        for (int x : theater.getRow()) {
+//            for (int y : theater.getSeat()) {
+//                seats.add(new Seat(null, x, y, false, screening));
+//            }
+//        }
+//        seatRepo.saveAll(seats);
+
+        return modelMapper.map(screening, ScreeningDTO.class);
     }
 
     @Override
-    public ScreeningDTO editScreening(ScreeningDTO dto) {
+    public ScreeningDTO editScreeningStartTime(ScreeningDTO dto) {
         if (dto.getId() == null || dto.getStartTime() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         Screening screening = screeningRepo.findById(dto.getId())
@@ -99,5 +114,4 @@ public class ScreeningServiceImpl implements ScreeningService {
         if (!screeningRepo.existsById(id)) return ResponseEntity.noContent().build();
         else throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
