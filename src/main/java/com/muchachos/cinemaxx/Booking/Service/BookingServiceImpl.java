@@ -5,6 +5,7 @@ import com.muchachos.cinemaxx.Booking.Entity.Booking;
 import com.muchachos.cinemaxx.Booking.Repo.BookingRepo;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Seat.DTO.SeatDTO;
+import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -41,6 +42,12 @@ public class BookingServiceImpl implements BookingService {
         booking.setSeats(seatRepo.findAllById(bookingDTO.getSeatIds()));
 
         booking.setScreening(screeningRepo.getById(bookingDTO.getScreeningId()));
+
+
+        for (Seat seat: booking.getSeats()) {
+            seat.setBooked(true);
+            seatRepo.save(seat);
+        }
 
         BookingDTO saved = modelMapper.map(bookingRepo.save(booking),BookingDTO.class);
 
