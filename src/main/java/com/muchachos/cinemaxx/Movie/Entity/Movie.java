@@ -25,7 +25,7 @@ public class Movie {
     @Column(length = 20,nullable = false)
     String rating;
 
-    public Movie(Integer id, String title, String rating, String cast, String info, int duration) {
+    public Movie(Integer id, String title, String rating, String cast, String info, int duration, String trailer, String poster, String image) {
         this.id = id;
         this.title = title;
         this.rating = rating;
@@ -42,6 +42,15 @@ public class Movie {
 
     @Column(nullable = false)
     int duration;
+
+    @Column(nullable = false)
+    String trailer;
+
+    @Column(nullable = false)
+    String posters;
+
+    @Column(nullable = false)
+    String  image;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movie_id")

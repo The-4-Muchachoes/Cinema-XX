@@ -24,13 +24,19 @@ public class TestDataMaker {
                 "PG18",
                 "George Clooney, Arnold Schwarzenegger",
                 "Batman has to save the day again",
-                120)).getId());
+                120,
+                "https://youtu.be/8ugaeA-nMTc",
+                "https://www.imdb.com/title/tt0371746/mediaviewer/rm1544850432/?ref_=tt_ov_i",
+                "https://www.imdb.com/title/tt0371746/mediaviewer/rm320113664/?ref_=ext_shr_lnk")).getId());
         ids.add(movieRepo.save(new Movie(null,
                 "Superman",
                 "PG12",
                 "Rick Mortyson, Lois Griffin",
                 "Superman must save Lois",
-                90)).getId());
+                90,
+                "https://www.youtube.com/watch?v=TYMMOjBUPMM",
+                "https://m.imdb.com/title/tt0145487/mediaviewer/rm3632146944/?fbclid=IwAR1R_iqLbOlVBVZ0IosrxRXQ89blCJKmarwSInP7MZEzCWS-B6JXoM73rGc",
+                "https://m.imdb.com/title/tt0145487/mediaviewer/rm1262040064/")).getId());
 
         return ids;
     }
