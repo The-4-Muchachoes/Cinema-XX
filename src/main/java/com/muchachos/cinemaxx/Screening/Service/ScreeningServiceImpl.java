@@ -6,6 +6,8 @@ import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Seat.Entity.Seat;
+import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
 import com.muchachos.cinemaxx.Theater.DTO.TheaterDTO;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
+    SeatRepo seatRepo;
 
     ScreeningRepo screeningRepo;
 
@@ -84,13 +87,13 @@ public class ScreeningServiceImpl implements ScreeningService {
         Screening screening = screeningRepo.save(modelMapper.map(dto, Screening.class));
 
         // generate seats for the screening
-//        List<Seat> seats = new ArrayList<>();
-//        for (int x : theater.getRow()) {
-//            for (int y : theater.getSeat()) {
-//                seats.add(new Seat(null, x, y, false, screening));
-//            }
-//        }
-//        seatRepo.saveAll(seats);
+        List<Seat> seats = new ArrayList<>();
+        for (int x=1 ; x <= theater.getRows();x++) {
+            for (int y=1 ; y <= theater.getSeats();y++) {
+                seats.add(new Seat(null, x, y, false, screening));
+            }
+        }
+        seatRepo.saveAll(seats);
 
         return modelMapper.map(screening, ScreeningDTO.class);
     }

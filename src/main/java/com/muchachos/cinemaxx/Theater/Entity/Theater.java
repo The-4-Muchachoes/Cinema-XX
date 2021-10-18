@@ -25,6 +25,12 @@ public class Theater {
     @Column(length = 50,nullable = false)
     String name;
 
+    @Column(nullable = false)
+    int rows;
+
+    @Column(nullable = false)
+    int seats;
+
     @ManyToOne
     @JsonIgnoreProperties("theaters")
     Cinema cinema;

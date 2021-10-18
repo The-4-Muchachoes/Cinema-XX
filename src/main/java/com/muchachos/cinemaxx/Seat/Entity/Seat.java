@@ -13,16 +13,23 @@ import javax.persistence.*;
 @Getter@Setter
 @NoArgsConstructor@AllArgsConstructor
 public class Seat {
+    public Seat(Integer id, int row, int seatNo, boolean booked, Screening screening) {
+        this.id = id;
+        this.row = row;
+        this.seatNo = seatNo;
+        this.booked = booked;
+        this.screening = screening;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(length = 3,nullable = false)
-    int x;
+    int row;
 
     @Column(length = 3,nullable = false)
-    int y;
+    int seatNo;
 
     @Column(length=23,nullable = false)
     boolean booked;
