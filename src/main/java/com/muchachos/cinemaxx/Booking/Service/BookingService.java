@@ -1,10 +1,11 @@
 package com.muchachos.cinemaxx.Booking.Service;
 
 import com.muchachos.cinemaxx.Booking.DTO.BookingDTO;
-import com.muchachos.cinemaxx.Booking.Entity.Booking;
+import com.muchachos.cinemaxx.Booking.DTO.NewBookingDTO;
+import org.springframework.http.ResponseEntity;
 
 public interface BookingService {
 
-    BookingDTO createBooking(BookingDTO bookingDTO);
+    ResponseEntity<BookingDTO> createBooking(NewBookingDTO dto);
 
 }

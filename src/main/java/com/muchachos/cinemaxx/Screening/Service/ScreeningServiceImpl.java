@@ -87,8 +87,8 @@ public class ScreeningServiceImpl implements ScreeningService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         TheaterDTO theaterDTO = modelMapper.map(theater, TheaterDTO.class);
 
-//        dto.setMovie(movieDTO);
-//        dto.setTheater(theaterDTO);
+        dto.setMovie(movieDTO);
+        dto.setTheater(theaterDTO);
 
         Screening screening = screeningRepo.save(modelMapper.map(dto, Screening.class));
 
