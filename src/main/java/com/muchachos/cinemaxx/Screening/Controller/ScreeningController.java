@@ -13,20 +13,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
-@RequestMapping(path = "api/screenings", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class ScreeningController {
 
     @Autowired
     ScreeningServiceImpl screeningService;
 
-    @GetMapping
+    @GetMapping(path = "/api/public/screenings")
     private Iterable<ScreeningDTOWithTitleAndRating> getScreeningsByCinemaAndDate(@RequestParam int cinemaId, @RequestParam String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate d = LocalDate.parse(date, formatter);
         return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d, null);
     }
 
-    @GetMapping(path = "/{cinema_id}/between_dates")
+    @GetMapping(path = "/api/public/screenings/{cinema_id}/between_dates")
     private Iterable<ScreeningDTOWithTitleAndRating> getScreeningsByCinemaBetweenDates(@PathVariable int cinema_id,
                                                                      @RequestParam String startDate,
                                                                      @RequestParam String endDate) {
@@ -36,7 +36,7 @@ public class ScreeningController {
         return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinema_id, d1, d2);
 
     }
-    @PostMapping
+    @PostMapping(path = "/api/client/screenings")
     private ScreeningDTOWithTitleAndRating addScreening(@RequestParam int movie_id, @RequestParam  int theater_id, @RequestParam String date, @RequestParam String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm");
         LocalDateTime d = LocalDateTime.parse(date+"T" + time, formatter);
@@ -44,13 +44,13 @@ public class ScreeningController {
 
     }
 
-    @PutMapping
+    @PutMapping(path = "/api/client/screenings")
     private ScreeningDTO editScreening(ScreeningDTO dto){
         return screeningService.editScreening(dto);
     }
 
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/api/admin/screenings/{id}")
     private ResponseEntity<?> deleteScreening(@PathVariable int id) {
         return screeningService.deleteScreening(id);
     }

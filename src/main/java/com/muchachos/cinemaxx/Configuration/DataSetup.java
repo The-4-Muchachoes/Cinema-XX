@@ -6,12 +6,17 @@ import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Security.User.Role;
+import com.muchachos.cinemaxx.Security.User.User;
+import com.muchachos.cinemaxx.Security.User.UserRepo;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Configuration
 public class DataSetup implements CommandLineRunner {
@@ -20,12 +25,14 @@ public class DataSetup implements CommandLineRunner {
     TheaterRepo theaterRepo;
     ScreeningRepo screeningRepo;
     CinemaRepo cinemaRepo;
+    UserRepo userRepo;
 
-    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningRepo screeningRepo,CinemaRepo cinemaRepo){
+    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningRepo screeningRepo,CinemaRepo cinemaRepo, UserRepo userRepo){
         this.movieRepo=movieRepo;
         this.theaterRepo=theaterRepo;
         this.screeningRepo=screeningRepo;
         this.cinemaRepo=cinemaRepo;
+        this.userRepo=userRepo;
     }
 
     @Override
@@ -41,5 +48,15 @@ public class DataSetup implements CommandLineRunner {
 
         Screening screening1=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie1, theater1));
         Screening screening2=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie2, theater2));
+
+
+
+        Role role1 =new Role(Role.Admin);
+        Role role2 =new Role(Role.Super_Admin);
+
+        User user1 =userRepo.save(new User("Alex", "password"));
+        user1.addAuthority(role1);
+        User user2 =userRepo.save(new User("Peri", "password"));
+        user2.addAuthority(role2);
     }
 }

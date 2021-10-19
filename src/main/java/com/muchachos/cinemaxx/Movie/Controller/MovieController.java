@@ -8,18 +8,19 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/movies", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping( produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
     ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     MovieServiceImpl movieService;
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/api/public/movies/{id}")
     MovieDTO getMovie(@PathVariable int id) {
         return modelMapper.map(movieService.getMovieByID(id), MovieDTO.class);
     }
-    @GetMapping
+
+    @GetMapping(path = "/api/public/movies")
     MovieDTO getMovieByTitle(@RequestParam String title){
         return modelMapper.map(movieService.getMovieByTitle(title), MovieDTO.class);
     }
