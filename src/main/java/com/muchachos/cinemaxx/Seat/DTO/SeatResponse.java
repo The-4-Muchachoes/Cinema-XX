@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SeatDTO {
+public class SeatResponse {
 
     private Integer id;
     private Integer row;

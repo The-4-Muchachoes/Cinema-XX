@@ -27,7 +27,7 @@ public class Seat {
     int seatNo;
 
     @Column(length=23,nullable = false)
-    boolean booked;
+    Status status;
 
     @ManyToOne
     Booking booking;
@@ -35,11 +35,13 @@ public class Seat {
     @ManyToOne
     Screening screening;
 
-    public Seat(Integer id, int row, int seatNo, boolean booked, Screening screening) {
+    public Seat(Integer id, int row, int seatNo, Status status, Screening screening) {
         this.id = id;
         this.row = row;
         this.seatNo = seatNo;
-        this.booked = booked;
+        this.status = status;
         this.screening = screening;
     }
+
+    public enum Status { FREE, BOOKED, RESERVED }
 }

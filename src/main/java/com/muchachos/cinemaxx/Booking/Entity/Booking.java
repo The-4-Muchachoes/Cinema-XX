@@ -28,4 +28,9 @@ public class Booking {
 
     @ManyToOne
     Screening screening;
+
+    Status status;
+
+    public enum Status { CONFIRMED, CANCELLED }
 }
+

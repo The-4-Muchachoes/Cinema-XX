@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class NewBookingDTO {
+public class CreateBookingRequest {
 
     private Integer screeningId;
     private List <Integer> seatIds = new ArrayList<>();

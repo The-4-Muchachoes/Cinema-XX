@@ -95,7 +95,7 @@ public class ScreeningServiceImpl implements ScreeningService {
         List<Seat> seats = new ArrayList<>();
         for (int x=1 ; x <= theater.getRows();x++) {
             for (int y=1 ; y <= theater.getSeats();y++) {
-                seats.add(new Seat(null, x, y, false, screening));
+                seats.add(new Seat(null, x, y, Seat.Status.BOOKED, screening));
             }
         }
         seatRepo.saveAll(seats);
