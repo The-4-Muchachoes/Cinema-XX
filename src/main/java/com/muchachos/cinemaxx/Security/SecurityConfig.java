@@ -2,15 +2,19 @@ package com.muchachos.cinemaxx.Security;
 
 import com.muchachos.cinemaxx.Security.User.Role;
 import com.muchachos.cinemaxx.Security.User.UserRepo;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,20 +24,32 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
-
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final Logger logger;
     private final UserRepo userRepo;
     private final JwtTokenFilter jwtTokenFilter;
 
-    public SecurityConfig(UserRepo userRepo,
-                          JwtTokenFilter jwtTokenFilter) {
+
+    public SecurityConfig(Logger logger, UserRepo userRepo, JwtTokenFilter jwtTokenFilter) {
+        super();
+
+        this.logger = logger;
         this.userRepo = userRepo;
         this.jwtTokenFilter = jwtTokenFilter;
+
+        // Inherit security context in async function calls
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
 
-    @Autowired
+
+    @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(username -> userRepo
                 .findByUsername(username)

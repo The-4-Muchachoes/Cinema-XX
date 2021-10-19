@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 
 @Api(tags = "Authentication")
 @RestController
-@RequestMapping(path = "api/public")
+@RequestMapping(path = "api/public", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class UserController {
 
     private final AuthenticationManager authenticationManager;
@@ -34,7 +35,7 @@ public class UserController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody @Valid User userRequest) {
         try {
             Authentication authenticate = authenticationManager

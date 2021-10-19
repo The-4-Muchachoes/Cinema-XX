@@ -2,13 +2,10 @@ package com.muchachos.cinemaxx.Security.User;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,7 +15,6 @@ import java.util.Set;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails, Serializable {
 
@@ -32,12 +28,6 @@ public class User implements UserDetails, Serializable {
     private String username;
 
     private String password;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
 
     @ElementCollection
     private Set<Role> authorities = new HashSet<>();

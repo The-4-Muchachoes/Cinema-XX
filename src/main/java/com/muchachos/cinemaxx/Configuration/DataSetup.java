@@ -54,9 +54,12 @@ public class DataSetup implements CommandLineRunner {
         Role role1 =new Role(Role.Admin);
         Role role2 =new Role(Role.Super_Admin);
 
-        User user1 =userRepo.save(new User("Alex", "password"));
+        User user1 =new User("Alex", "password");
         user1.addAuthority(role1);
-        User user2 =userRepo.save(new User("Peri", "password"));
+        userRepo.save(user1);
+
+        User user2 = new User("Peri", "password");
         user2.addAuthority(role2);
+        userRepo.save(user2);
     }
 }
