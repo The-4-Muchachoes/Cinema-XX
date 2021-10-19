@@ -1,11 +1,6 @@
 package com.muchachos.cinemaxx.Booking.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
-import com.muchachos.cinemaxx.Seat.DTO.SeatDTO;
-import com.muchachos.cinemaxx.Seat.Entity.Seat;
-import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

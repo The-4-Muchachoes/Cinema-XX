@@ -4,9 +4,8 @@ import com.muchachos.cinemaxx.Cinema.Entity.Cinema;
 import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
-import com.muchachos.cinemaxx.Screening.Entity.Screening;
-import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Service.ScreeningService;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
@@ -70,8 +69,8 @@ public class TestDataMaker {
 
         for (Theater theater : theaterRepo.findAll()) {
 
-            ScreeningDTO screening1 = new ScreeningDTO(null, movieRepo.getById(1).getId(), theater.getId(), LocalDateTime.now());
-            ScreeningDTO screening2 = new ScreeningDTO(null, movieRepo.getById(2).getId(), theater.getId(), LocalDateTime.now());
+            CreateScreeningRequest screening1 = new CreateScreeningRequest(movieRepo.getById(1).getId(), theater.getId(), LocalDateTime.now());
+            CreateScreeningRequest screening2 = new CreateScreeningRequest(movieRepo.getById(2).getId(), theater.getId(), LocalDateTime.now());
 
             screeningService.addScreening(screening1);
             screeningService.addScreening(screening2);
