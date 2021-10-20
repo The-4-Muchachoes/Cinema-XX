@@ -4,6 +4,8 @@ import com.muchachos.cinemaxx.Security.User.Entity.Role;
 import com.muchachos.cinemaxx.Security.User.Entity.User;
 import com.muchachos.cinemaxx.Security.User.Service.UserService;
 import lombok.Data;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
