@@ -94,18 +94,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Public endpoints
                 .antMatchers("/api/public/**").permitAll()
                 .antMatchers("/api/new_user").permitAll()
-                .antMatchers(AUTH_LIST).permitAll()
+                .antMatchers(AUTH_LIST).permitAll() // Swagger
 
                 // Restricted endpoints
-                .antMatchers("/api/user/**").hasRole(Role.User)
-                .antMatchers("/api/client_admin/**").hasRole(Role.Client_Admin)
-                .antMatchers("/api/admin").hasRole(Role.Admin)
-                .antMatchers("/api/super_admin/**").hasRole(Role.Super_Admin)
-                .anyRequest().authenticated()
+                .antMatchers("/api/user/**").hasAuthority(Role.User)
+                .antMatchers("/api/client_admin/**").hasAuthority(Role.Client_Admin)
+                .antMatchers("/api/admin").hasAuthority(Role.Admin)
+                .antMatchers("/api/super_admin/**").hasAuthority(Role.Super_Admin)
+                .anyRequest().authenticated();
 
                 // Login Page
-                .and()
-                .formLogin().loginPage("/api/public/login");
+//                .and()
+//                .formLogin().loginPage("/api/public/login");
 
         // Add JWT token filter
         http.addFilterBefore(

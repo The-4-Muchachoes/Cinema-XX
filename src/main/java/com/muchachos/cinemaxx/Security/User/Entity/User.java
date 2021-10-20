@@ -29,7 +29,7 @@ public class User implements UserDetails, Serializable {
 
     private String password;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> authorities = new HashSet<>();
 
     public User(String username, String password) {

@@ -55,18 +55,33 @@ public class DataSetup implements CommandLineRunner {
         screeningService.addScreening(screening1);
         screeningService.addScreening(screening2);
 
-        Role role1 =new Role(Role.Admin);
-        Role role2 =new Role(Role.Super_Admin);
+        Role role1 = new Role(Role.Admin);
+        Role role2 = new Role(Role.Super_Admin);
+        Role role3 = new Role(Role.Client_Admin);
+        Role role4 = new Role(Role.User);
 
         User user1 =new User("Alex", "password");
         user1.setPassword(passwordEncoder.encode(user1.getPassword()));
         user1.addAuthority(role1);
         user1.addAuthority(role2);
+        user1.addAuthority(role3);
+        user1.addAuthority(role4);
         userRepo.save(user1);
 
         User user2 = new User("Peri", "password");
         user2.setPassword(passwordEncoder.encode(user2.getPassword()));
+        user2.addAuthority(role1);
         user2.addAuthority(role2);
+        user2.addAuthority(role3);
+        user2.addAuthority(role4);
         userRepo.save(user2);
+
+        User user3 = new User("JazzyMcJazz", "savemeperi");
+        user3.setPassword(passwordEncoder.encode(user3.getPassword()));
+        user3.addAuthority(role1);
+        user3.addAuthority(role2);
+        user3.addAuthority(role3);
+        user3.addAuthority(role4);
+        userRepo.save(user3);
     }
 }
