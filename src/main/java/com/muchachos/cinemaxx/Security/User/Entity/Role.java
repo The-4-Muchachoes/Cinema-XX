@@ -1,4 +1,4 @@
-package com.muchachos.cinemaxx.Security.User;
+package com.muchachos.cinemaxx.Security.User.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -36,7 +36,7 @@ public class ScreeningController {
         return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinema_id, d1, d2);
 
     }
-    @PostMapping(path = "/api/client/screenings")
+    @PostMapping(path = "/api/client_Admin/screenings")
     private ScreeningDTOWithTitleAndRating addScreening(@RequestParam int movie_id, @RequestParam  int theater_id, @RequestParam String date, @RequestParam String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm");
         LocalDateTime d = LocalDateTime.parse(date+"T" + time, formatter);
@@ -44,13 +44,13 @@ public class ScreeningController {
 
     }
 
-    @PutMapping(path = "/api/client/screenings")
+    @PutMapping(path = "/api/client_Admin/screenings")
     private ScreeningDTO editScreening(ScreeningDTO dto){
         return screeningService.editScreening(dto);
     }
 
 
-    @DeleteMapping(path = "/api/admin/screenings/{id}")
+    @DeleteMapping(path = "/api/client_Admin/screenings/{id}")
     private ResponseEntity<?> deleteScreening(@PathVariable int id) {
         return screeningService.deleteScreening(id);
     }

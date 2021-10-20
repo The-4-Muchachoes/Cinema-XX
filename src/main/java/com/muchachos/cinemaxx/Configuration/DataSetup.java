@@ -6,18 +6,16 @@ import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
-import com.muchachos.cinemaxx.Security.User.Role;
-import com.muchachos.cinemaxx.Security.User.User;
-import com.muchachos.cinemaxx.Security.User.UserRepo;
+import com.muchachos.cinemaxx.Security.User.Entity.Role;
+import com.muchachos.cinemaxx.Security.User.Entity.User;
+import com.muchachos.cinemaxx.Security.User.Repo.UserRepo;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Configuration
 public class DataSetup implements CommandLineRunner {

@@ -1,6 +1,6 @@
-package com.muchachos.cinemaxx.Security;
+package com.muchachos.cinemaxx.Security.Config;
 
-import com.muchachos.cinemaxx.Security.User.User;
+import com.muchachos.cinemaxx.Security.User.Entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -20,8 +20,8 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class JwtTokenUtil {
 
-    private final String jwtSecret = "zdtlD3JK56m6wTTgsNFhqzjqP";
-    private final String jwtIssuer = "example.io";
+    private final String jwtSecret = "bigmuchachos1234";
+    private final String jwtIssuer = "muchachos.cinemaxx";
 
     private final Logger logger;
 

@@ -1,6 +1,6 @@
-package com.muchachos.cinemaxx.Security;
+package com.muchachos.cinemaxx.Security.Config;
 
-import com.muchachos.cinemaxx.Security.User.UserRepo;
+import com.muchachos.cinemaxx.Security.User.Repo.UserRepo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.muchachos.cinemaxx.Security.User;
+package com.muchachos.cinemaxx.Security.User.Entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -34,7 +34,6 @@ public class User implements UserDetails, Serializable {
 
 
     public User(String username, String password) {
-        this.enabled =true;
         this.username = username;
         this.password = password;
     }

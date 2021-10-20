@@ -1,4 +1,4 @@
-package com.muchachos.cinemaxx.Security;
+package com.muchachos.cinemaxx.Security.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InjectionPoint;

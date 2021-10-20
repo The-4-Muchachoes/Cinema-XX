@@ -1,12 +1,9 @@
-package com.muchachos.cinemaxx.Security;
+package com.muchachos.cinemaxx.Security.Config;
 
-import com.muchachos.cinemaxx.Security.User.Role;
-import com.muchachos.cinemaxx.Security.User.UserRepo;
+import com.muchachos.cinemaxx.Security.User.Entity.Role;
+import com.muchachos.cinemaxx.Security.User.Repo.UserRepo;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -86,13 +83,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Set permissions on endpoints
         http.authorizeRequests()
-                // Our public endpoints
+                // Public endpoints
                 .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/api/new_user").permitAll()
+
+                // Restricted endpoints
                 .antMatchers("/api/user/**").hasRole(Role.User)
                 .antMatchers("/api/client_Admin/**").hasRole(Role.Client_Admin)
                 .antMatchers("/api/admin").hasRole(Role.Admin)
                 .antMatchers("/api/super_Admin/**").hasRole(Role.Super_Admin)
-                // Our private endpoints
+
                 .anyRequest().authenticated();
 
         // Add JWT token filter

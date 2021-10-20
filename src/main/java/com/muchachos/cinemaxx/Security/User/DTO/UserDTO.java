@@ -1,4 +1,4 @@
-package com.muchachos.cinemaxx.Security.User;
+package com.muchachos.cinemaxx.Security.User.DTO;
 
 
 import lombok.Data;
@@ -6,8 +6,6 @@ import lombok.Data;
 public class UserDTO {
 
     private String id;
-
     private String username;
-    private String fullName;
 
 }

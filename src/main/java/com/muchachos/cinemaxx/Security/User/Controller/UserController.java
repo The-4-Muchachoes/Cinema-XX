@@ -1,7 +1,9 @@
-package com.muchachos.cinemaxx.Security.User;
+package com.muchachos.cinemaxx.Security.User.Controller;
 
 
-import com.muchachos.cinemaxx.Security.JwtTokenUtil;
+import com.muchachos.cinemaxx.Security.Config.JwtTokenUtil;
+import com.muchachos.cinemaxx.Security.User.Entity.User;
+import com.muchachos.cinemaxx.Security.User.DTO.UserDTO;
 import io.swagger.annotations.Api;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
