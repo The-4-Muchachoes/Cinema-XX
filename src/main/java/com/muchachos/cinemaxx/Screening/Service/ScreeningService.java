@@ -6,7 +6,6 @@ import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScreeningService {

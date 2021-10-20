@@ -8,7 +8,6 @@ import com.muchachos.cinemaxx.Screening.DTO.EditScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
-import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
 import com.muchachos.cinemaxx.Seat.Service.SeatService;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
@@ -34,18 +33,15 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     TheaterRepo theaterRepo;
 
-    SeatRepo seatRepo;
-
     SeatService seatService;
 
     ModelMapper modelMapper;
 
     public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo,
-                                TheaterRepo theaterRepo, SeatRepo seatRepo, SeatService seatService) {
+                                TheaterRepo theaterRepo, SeatService seatService) {
         this.screeningRepo = screeningRepo;
         this.movieRepo = movieRepo;
         this.theaterRepo = theaterRepo;
-        this.seatRepo = seatRepo;
         this.seatService = seatService;
 
         modelMapper = new ModelMapper();

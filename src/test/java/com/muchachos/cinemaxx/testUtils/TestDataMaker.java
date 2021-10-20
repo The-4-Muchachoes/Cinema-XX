@@ -5,7 +5,6 @@ import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Service.ScreeningService;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
