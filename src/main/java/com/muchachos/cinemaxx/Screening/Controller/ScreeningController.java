@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @RestController
-@RequestMapping(path = "api/screenings", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class ScreeningController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class ScreeningController {
         return screeningService.editScreeningStartTime(dto);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/api/client_Admin/screenings/{id}")
     private ResponseEntity<?> deleteScreening(@PathVariable int id) {
         return screeningService.deleteScreening(id);
     }
