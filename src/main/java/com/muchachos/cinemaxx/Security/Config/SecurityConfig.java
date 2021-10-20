@@ -89,11 +89,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Restricted endpoints
                 .antMatchers("/api/user/**").hasRole(Role.User)
-                .antMatchers("/api/client_Admin/**").hasRole(Role.Client_Admin)
+                .antMatchers("/api/client_admin/**").hasRole(Role.Client_Admin)
                 .antMatchers("/api/admin").hasRole(Role.Admin)
-                .antMatchers("/api/super_Admin/**").hasRole(Role.Super_Admin)
+                .antMatchers("/api/super_admin/**").hasRole(Role.Super_Admin)
+                .anyRequest().authenticated()
 
-                .anyRequest().authenticated();
+                // Login Page
+                .and()
+                .formLogin().loginPage("/api/public/login");
 
         // Add JWT token filter
         http.addFilterBefore(

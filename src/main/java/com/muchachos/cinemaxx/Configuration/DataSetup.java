@@ -4,17 +4,14 @@ import com.muchachos.cinemaxx.Cinema.Entity.Cinema;
 import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
-import com.muchachos.cinemaxx.Screening.Entity.Screening;
-import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Screening.Service.ScreeningService;
 import com.muchachos.cinemaxx.Security.User.Entity.Role;
 import com.muchachos.cinemaxx.Security.User.Entity.User;
 import com.muchachos.cinemaxx.Security.User.Repo.UserRepo;
 import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Service.ScreeningServiceImpl;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,14 +23,13 @@ public class DataSetup implements CommandLineRunner {
 
     MovieRepo movieRepo;
     TheaterRepo theaterRepo;
-    ScreeningServiceImpl screeningService;
+    ScreeningService screeningService;
     CinemaRepo cinemaRepo;
     UserRepo userRepo;
     PasswordEncoder passwordEncoder;
-    ModelMapper modelMapper = new ModelMapper();
 
-    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningServiceImpl screeningService,CinemaRepo cinemaRepo){
-    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningRepo screeningRepo,CinemaRepo cinemaRepo, UserRepo userRepo, PasswordEncoder passwordEncoder){
+    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningServiceImpl screeningService,
+                     CinemaRepo cinemaRepo, UserRepo userRepo, PasswordEncoder passwordEncoder){
         this.movieRepo=movieRepo;
         this.theaterRepo=theaterRepo;
         this.screeningService=screeningService;
@@ -58,10 +54,6 @@ public class DataSetup implements CommandLineRunner {
 
         screeningService.addScreening(screening1);
         screeningService.addScreening(screening2);
-        Screening screening1=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie1, theater1));
-        Screening screening2=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie2, theater2));
-
-
 
         Role role1 =new Role(Role.Admin);
         Role role2 =new Role(Role.Super_Admin);
@@ -69,6 +61,7 @@ public class DataSetup implements CommandLineRunner {
         User user1 =new User("Alex", "password");
         user1.setPassword(passwordEncoder.encode(user1.getPassword()));
         user1.addAuthority(role1);
+        user1.addAuthority(role2);
         userRepo.save(user1);
 
         User user2 = new User("Peri", "password");

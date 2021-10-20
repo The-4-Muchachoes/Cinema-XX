@@ -21,14 +21,14 @@ public class ScreeningController {
     @Autowired
     ScreeningServiceImpl screeningService;
 
-    @GetMapping(path = "/{cinemaId}/{date}")
+    @GetMapping(path = "/api/public/screenings/{cinemaId}/{date}")
     private Iterable<ScreeningView> getScreeningsByCinemaAndDate(@PathVariable int cinemaId, @PathVariable String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate d = LocalDate.parse(date, formatter);
         return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinemaId, d, null);
     }
 
-    @GetMapping(path = "/{cinema_id}/{startDate}/{endDate}")
+    @GetMapping(path = "/api/public/screenings/{cinema_id}/{startDate}/{endDate}")
     private Iterable<ScreeningView> getScreeningsByCinemaBetweenDates(@PathVariable int cinema_id,
                                                                       @PathVariable String startDate,
                                                                       @PathVariable String endDate) {
@@ -38,12 +38,12 @@ public class ScreeningController {
         return screeningService.getTitleTimeAndRatingByCinemaAndDate(cinema_id, d1, d2);
     }
 
-    @PostMapping
+    @PostMapping(path = "/api/client_admin/screenings")
     private ResponseEntity<?> addScreening(CreateScreeningRequest dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(screeningService.addScreening(dto));
     }
 
-    @PutMapping()
+    @PutMapping(path = "/api/client_admin/screenings" )
     @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
     private ResponseEntity<?> editScreeningTime(EditScreeningRequest dto){
         return screeningService.editScreeningStartTime(dto);
