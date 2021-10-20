@@ -14,6 +14,7 @@ import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -26,13 +27,15 @@ public class DataSetup implements CommandLineRunner {
     ScreeningRepo screeningRepo;
     CinemaRepo cinemaRepo;
     UserRepo userRepo;
+    PasswordEncoder passwordEncoder;
 
-    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningRepo screeningRepo,CinemaRepo cinemaRepo, UserRepo userRepo){
+    public DataSetup(MovieRepo movieRepo,TheaterRepo theaterRepo,ScreeningRepo screeningRepo,CinemaRepo cinemaRepo, UserRepo userRepo, PasswordEncoder passwordEncoder){
         this.movieRepo=movieRepo;
         this.theaterRepo=theaterRepo;
         this.screeningRepo=screeningRepo;
         this.cinemaRepo=cinemaRepo;
         this.userRepo=userRepo;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @Override
@@ -55,10 +58,12 @@ public class DataSetup implements CommandLineRunner {
         Role role2 =new Role(Role.Super_Admin);
 
         User user1 =new User("Alex", "password");
+        user1.setPassword(passwordEncoder.encode(user1.getPassword()));
         user1.addAuthority(role1);
         userRepo.save(user1);
 
         User user2 = new User("Peri", "password");
+        user2.setPassword(passwordEncoder.encode(user2.getPassword()));
         user2.addAuthority(role2);
         userRepo.save(user2);
     }
