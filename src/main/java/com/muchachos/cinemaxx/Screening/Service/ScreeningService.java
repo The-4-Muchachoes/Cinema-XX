@@ -3,6 +3,7 @@ package com.muchachos.cinemaxx.Screening.Service;
 import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.EditScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
+import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;

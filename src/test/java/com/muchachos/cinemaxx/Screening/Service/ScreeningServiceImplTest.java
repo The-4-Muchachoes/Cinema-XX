@@ -46,16 +46,17 @@ class ScreeningServiceImplTest {
         seatService = new SeatServiceImpl(seatRepo, screeningRepo, theaterRepo);
         screeningService = new ScreeningServiceImpl(screeningRepo, movieRepo, theaterRepo, seatService);
 
-        TestDataMaker.makeMovies(movieRepo);
-        TestDataMaker.makeCinemas(cinemaRepo);
-        TestDataMaker.makeTheaters(theaterRepo, cinemaRepo);
-        TestDataMaker.makeScreenings(screeningService, theaterRepo, movieRepo);
+//        TestDataMaker.makeMovies(movieRepo);
+//        TestDataMaker.makeCinemas(cinemaRepo);
+//        TestDataMaker.makeTheaters(theaterRepo, cinemaRepo);
+//        TestDataMaker.makeScreenings(screeningService, theaterRepo, movieRepo);
+        TestDataMaker.makeTestData(cinemaRepo, theaterRepo, movieRepo, screeningService);
     }
 
     @Test
     void getTitleTimeAndRatingByCinemaAndDate() {
         List<ScreeningView> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now(), null);
         assertEquals(4, dtos.size());
-        assertEquals("Batman", dtos.get(0).getMovie().getTitle());
+        assertEquals("Ironman", dtos.get(0).getMovie().getTitle());
     }
 }

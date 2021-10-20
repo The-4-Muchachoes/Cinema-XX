@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Movie.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,15 +27,6 @@ public class Movie {
     @Column(length = 20,nullable = false)
     String rating;
 
-    public Movie(Integer id, String title, String rating, String cast, String info, int duration, String trailer, String poster, String image) {
-        this.id = id;
-        this.title = title;
-        this.rating = rating;
-        this.cast = cast;
-        this.info = info;
-        this.duration = duration;
-    }
-
     @Column(length = 1024,nullable = false)
     String cast;
 
@@ -44,14 +36,11 @@ public class Movie {
     @Column(nullable = false)
     int duration;
 
-    @Column(nullable = false)
-    String trailer;
+    String trailerUrl;
 
-    @Column(nullable = false)
-    String posters;
+    String posterUrl;
 
-    @Column(nullable = false)
-    String  image;
+    String imageUrl;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movie_id")
@@ -65,5 +54,18 @@ public class Movie {
         this.cast = cast;
         this.info = info;
         this.duration = duration;
+    }
+
+    public Movie(Integer id, String title, String rating, String cast, String info,
+                 int duration, String trailerUrl, String posterUrl, String imageUrl) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+        this.cast = cast;
+        this.info = info;
+        this.duration = duration;
+        this.trailerUrl = trailerUrl;
+        this.posterUrl = posterUrl;
+        this.imageUrl = imageUrl;
     }
 }
