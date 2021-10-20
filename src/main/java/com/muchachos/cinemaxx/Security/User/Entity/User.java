@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Security.User.Entity;
 
+import com.muchachos.cinemaxx.Security.User.DTO.LoginRequest;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,11 @@ public class User implements UserDetails, Serializable {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(LoginRequest request) {
+        this.username = request.getUsername();
+        this.password = request.getPassword();
     }
 
     @Override

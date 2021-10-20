@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Security.User.Controller;
 
+import com.muchachos.cinemaxx.Security.User.DTO.LoginRequest;
 import com.muchachos.cinemaxx.Security.User.Entity.Role;
 import com.muchachos.cinemaxx.Security.User.Entity.User;
 import com.muchachos.cinemaxx.Security.User.Service.UserService;
@@ -19,10 +20,10 @@ public class AddUserController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/api/public/user")
-    private User addUser(@RequestParam String username,@RequestParam String password){
-        User user = new User(username, password);
-        Role role1 =new Role(Role.User);
-        user.setPassword(passwordEncoder.encode(password));
+    private User addUser(LoginRequest request){
+        User user = new User(request);
+        Role role1 = new Role(Role.User);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.addAuthority(role1);
         return userService.addUser(user);
     }
