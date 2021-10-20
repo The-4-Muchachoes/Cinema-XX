@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Seat.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.muchachos.cinemaxx.Booking.Entity.Booking;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import lombok.AllArgsConstructor;

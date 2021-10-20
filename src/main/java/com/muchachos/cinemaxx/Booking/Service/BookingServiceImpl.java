@@ -10,7 +10,7 @@ import com.muchachos.cinemaxx.Exceptions.SeatAlreadyBookedException;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
-import com.muchachos.cinemaxx.Seat.SeatService;
+import com.muchachos.cinemaxx.Seat.Service.SeatService;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

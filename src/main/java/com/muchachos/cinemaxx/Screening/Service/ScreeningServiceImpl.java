@@ -10,6 +10,7 @@ import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
+import com.muchachos.cinemaxx.Seat.Service.SeatService;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.modelmapper.ModelMapper;
@@ -35,13 +36,17 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     SeatRepo seatRepo;
 
+    SeatService seatService;
+
     ModelMapper modelMapper;
 
-    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo, TheaterRepo theaterRepo, SeatRepo seatRepo) {
+    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo,
+                                TheaterRepo theaterRepo, SeatRepo seatRepo, SeatService seatService) {
         this.screeningRepo = screeningRepo;
         this.movieRepo = movieRepo;
         this.theaterRepo = theaterRepo;
         this.seatRepo = seatRepo;
+        this.seatService = seatService;
 
         modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -92,13 +97,7 @@ public class ScreeningServiceImpl implements ScreeningService {
         screeningRepo.save(screening);
 
         // generate seats for the screening
-        List<Seat> seats = new ArrayList<>();
-        for (int x=1 ; x <= theater.getRows();x++) {
-            for (int y=1 ; y <= theater.getSeats();y++) {
-                seats.add(new Seat(null, x, y, Seat.Status.BOOKED, screening));
-            }
-        }
-        seatRepo.saveAll(seats);
+        seatService.generateSeatsForScreening(screening);
 
         return modelMapper.map(screening, ScreeningView.class);
     }

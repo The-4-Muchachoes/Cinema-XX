@@ -1,6 +1,5 @@
 package com.muchachos.cinemaxx.Screening.Controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.EditScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;

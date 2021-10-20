@@ -5,6 +5,7 @@ import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
 import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
+import com.muchachos.cinemaxx.Seat.Service.SeatService;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import com.muchachos.cinemaxx.testUtils.TestDataMaker;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,11 +36,14 @@ class ScreeningServiceImplTest {
     @Autowired
     ScreeningRepo screeningRepo;
 
+    @Autowired
+    SeatService seatService;
+
     ScreeningServiceImpl screeningService;
 
     @BeforeEach
     public void setupData() {
-        screeningService = new ScreeningServiceImpl(screeningRepo, movieRepo, theaterRepo, seatRepo);
+        screeningService = new ScreeningServiceImpl(screeningRepo, movieRepo, theaterRepo, seatRepo, seatService);
 
         TestDataMaker.makeMovies(movieRepo);
         TestDataMaker.makeCinemas(cinemaRepo);
