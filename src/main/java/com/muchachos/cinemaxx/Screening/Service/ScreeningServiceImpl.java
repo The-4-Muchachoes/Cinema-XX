@@ -1,14 +1,19 @@
 package com.muchachos.cinemaxx.Screening.Service;
 
+import com.muchachos.cinemaxx.Exceptions.EntityNotFoundException;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTO;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTOWithTitleAndRating;
+import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
+import com.muchachos.cinemaxx.Screening.DTO.EditScreeningRequest;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Entity.Screening;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
+import com.muchachos.cinemaxx.Seat.Service.SeatService;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,21 +33,29 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     TheaterRepo theaterRepo;
 
-    ModelMapper modelMapper = new ModelMapper();
+    SeatService seatService;
 
-    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo, TheaterRepo theaterRepo) {
+    ModelMapper modelMapper;
+
+    public ScreeningServiceImpl(ScreeningRepo screeningRepo, MovieRepo movieRepo,
+                                TheaterRepo theaterRepo, SeatService seatService) {
         this.screeningRepo = screeningRepo;
         this.movieRepo = movieRepo;
         this.theaterRepo = theaterRepo;
+        this.seatService = seatService;
+
+        modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
     @Override
-    public List<ScreeningDTOWithTitleAndRating> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate) {
+    public List<ScreeningView> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate) {
         List<Theater> theaters = theaterRepo.findAllByCinema_Id(cinemaId);
         List<Screening> screenings = new ArrayList<>();
-        List<ScreeningDTOWithTitleAndRating> screeningDTOS = new ArrayList<>();
+        List<ScreeningView> screeningViews = new ArrayList<>();
 
-        // Database stores a timestamp so the below datetime objects are necessary to query a single date
+        // If endTime is null returns all screening for the date of startTime, else between given dates
+        // endDate is inclusive
         LocalDateTime today = startDate.atStartOfDay();
         LocalDateTime tomorrow;
         if (endDate == null)
@@ -54,50 +67,54 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         // Add screenings per theater hall to list
         for (Theater theater : theaters) {
-            screenings.addAll(screeningRepo.findAllByStartTimeBetweenAndTheater_Id(today, tomorrow, theater.getId()));
+            screenings.addAll(screeningRepo.findAllByStartTimeBetweenAndTheater_IdOrderByStartTime(
+                    today, tomorrow, theater.getId())
+            );
         }
 
         // Create DTOs per screening and add them to list
         for (Screening screening : screenings) {
-            Movie movie = movieRepo.findById(
-                    screening
-                            .getMovie()
-                            .getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            screeningDTOS.add(new ScreeningDTOWithTitleAndRating(null, screening.getStartTime(), movie.getTitle(), movie.getRating()));
+            screeningViews.add(modelMapper.map(screening, ScreeningView.class));
         }
 
-        return screeningDTOS;
+        return screeningViews;
     }
 
-    public ScreeningDTOWithTitleAndRating addScreening(int movie_id, int theater_id, LocalDateTime startTime ) {
-        Movie m = movieRepo.findById(movie_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Theater t = theaterRepo.findById(theater_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ScreeningView addScreening(CreateScreeningRequest dto) {
+        Movie movie = movieRepo.findById(dto.getMovieId())
+                .orElseThrow(() -> new EntityNotFoundException("No movie exists by that ID"));
 
-        Screening s = new Screening(null, startTime, m,t);
-        Screening  saved = screeningRepo.save(s);
-        return  new ScreeningDTOWithTitleAndRating(saved.getId(),saved.getStartTime(), saved.getMovie().getTitle(), saved.getMovie().getRating());
+        Theater theater = theaterRepo.findById(dto.getTheaterId())
+                .orElseThrow(() -> new EntityNotFoundException("No theater exists by that ID"));
 
+        Screening screening = modelMapper.map(dto, Screening.class);
+        screening.setMovie(movie);
+        screening.setTheater(theater);
+        screeningRepo.save(screening);
+
+        // generate seats for the screening
+        seatService.generateSeatsForScreening(screening);
+
+        return modelMapper.map(screening, ScreeningView.class);
     }
 
     @Override
-    public ScreeningDTO editScreening(ScreeningDTO dto) {
-        if (dto.getId() == null || dto.getStartTime() == null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> editScreeningStartTime(EditScreeningRequest dto) {
         Screening screening = screeningRepo.findById(dto.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException("No screening exists by that ID"));
         screening.setStartTime(dto.getStartTime());
+        screeningRepo.save(screening);
 
-        return modelMapper.map(screeningRepo.save(screening), ScreeningDTO.class);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
     public ResponseEntity<?> deleteScreening(int id) {
 
-        if (!screeningRepo.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        screeningRepo.deleteById(id);
+        if (!screeningRepo.existsById(id)) throw new EntityNotFoundException("No screening exists by that ID");
+        else screeningRepo.deleteById(id);
+
         if (!screeningRepo.existsById(id)) return ResponseEntity.noContent().build();
         else throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

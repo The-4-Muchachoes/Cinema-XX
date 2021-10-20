@@ -4,8 +4,8 @@ import com.muchachos.cinemaxx.Cinema.Entity.Cinema;
 import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Entity.Movie;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
-import com.muchachos.cinemaxx.Screening.Entity.Screening;
-import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
+import com.muchachos.cinemaxx.Screening.Service.ScreeningService;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 
@@ -56,15 +56,15 @@ public class TestDataMaker {
         List<Integer> ids = new ArrayList<>();
 
         for (Cinema cinema : cinemaRepo.findAll()) {
-            ids.add(theaterRepo.save(new Theater(null, "A", cinema)).getId());
-            ids.add(theaterRepo.save(new Theater(null, "B", cinema)).getId());
+            ids.add(theaterRepo.save(new Theater(null, "A",10,10 ,cinema)).getId());
+            ids.add(theaterRepo.save(new Theater(null, "B",12,12, cinema)).getId());
         }
 
         return ids;
     }
 
     public static List<Integer> makeScreenings(
-            ScreeningRepo screeningRepo,
+            ScreeningService screeningService,
             TheaterRepo theaterRepo,
             MovieRepo movieRepo
     ) {
@@ -73,8 +73,12 @@ public class TestDataMaker {
         List<Integer> ids = new ArrayList<>();
 
         for (Theater theater : theaterRepo.findAll()) {
-            ids.add(screeningRepo.save(new Screening(null, LocalDateTime.now(), movieRepo.getById(1), theater)).getId());
-            ids.add(screeningRepo.save(new Screening(null, LocalDateTime.now(), movieRepo.getById(2), theater)).getId());
+
+            CreateScreeningRequest screening1 = new CreateScreeningRequest(movieRepo.getById(1).getId(), theater.getId(), LocalDateTime.now());
+            CreateScreeningRequest screening2 = new CreateScreeningRequest(movieRepo.getById(2).getId(), theater.getId(), LocalDateTime.now());
+
+            screeningService.addScreening(screening1);
+            screeningService.addScreening(screening2);
         }
 
         return ids;

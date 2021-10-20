@@ -2,8 +2,11 @@ package com.muchachos.cinemaxx.Screening.Service;
 
 import com.muchachos.cinemaxx.Cinema.Repo.CinemaRepo;
 import com.muchachos.cinemaxx.Movie.Repo.MovieRepo;
-import com.muchachos.cinemaxx.Screening.DTO.ScreeningDTOWithTitleAndRating;
+import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Repo.ScreeningRepo;
+import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
+import com.muchachos.cinemaxx.Seat.Service.SeatService;
+import com.muchachos.cinemaxx.Seat.Service.SeatServiceImpl;
 import com.muchachos.cinemaxx.Theater.Repo.TheaterRepo;
 import com.muchachos.cinemaxx.testUtils.TestDataMaker;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,22 +34,28 @@ class ScreeningServiceImplTest {
     @Autowired
     ScreeningRepo screeningRepo;
 
+    @Autowired
+    SeatRepo seatRepo;
+
+    SeatService seatService;
+
     ScreeningServiceImpl screeningService;
 
     @BeforeEach
     public void setupData() {
-        screeningService = new ScreeningServiceImpl(screeningRepo, movieRepo, theaterRepo);
+        seatService = new SeatServiceImpl(seatRepo, screeningRepo, theaterRepo);
+        screeningService = new ScreeningServiceImpl(screeningRepo, movieRepo, theaterRepo, seatService);
 
         TestDataMaker.makeMovies(movieRepo);
         TestDataMaker.makeCinemas(cinemaRepo);
         TestDataMaker.makeTheaters(theaterRepo, cinemaRepo);
-        TestDataMaker.makeScreenings(screeningRepo, theaterRepo, movieRepo);
+        TestDataMaker.makeScreenings(screeningService, theaterRepo, movieRepo);
     }
 
     @Test
     void getTitleTimeAndRatingByCinemaAndDate() {
-        List<ScreeningDTOWithTitleAndRating> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now(), null);
+        List<ScreeningView> dtos = screeningService.getTitleTimeAndRatingByCinemaAndDate(1, LocalDate.now(), null);
         assertEquals(4, dtos.size());
-        assertEquals("Batman", dtos.get(0).getTitle());
+        assertEquals("Batman", dtos.get(0).getMovie().getTitle());
     }
 }

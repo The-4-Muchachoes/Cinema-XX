@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Cinema.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.muchachos.cinemaxx.Theater.Entity.Theater;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,17 +14,19 @@ import java.util.List;
 @Getter@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="cinema")
 public class Cinema {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(length = 50,nullable = false)
+    @Column(name="cinema_name",length = 50,nullable = false)
     String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cinema_id")
+    @JsonIgnoreProperties("cinema")
     private List<Theater> theaters = new ArrayList<>();
 
     public Cinema(Integer id, String name) {

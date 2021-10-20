@@ -1,24 +1,19 @@
 package com.muchachos.cinemaxx.Screening.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ScreeningDTO {
+public class EditScreeningRequest {
 
-    Integer id;
-    Integer movieId;
-    Integer theaterId;
+    int id;
     @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
-    LocalDateTime startTime;
+    @NonNull LocalDateTime startTime;
 }
