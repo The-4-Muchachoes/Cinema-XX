@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +21,10 @@ public class AddUserController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/api/public/user")
-    private User addUser(LoginRequest request){
+    private User addUser(@RequestBody LoginRequest request){
         User user = new User(request);
         Role role1 = new Role(Role.User);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.addAuthority(role1);
         return userService.addUser(user);
     }
