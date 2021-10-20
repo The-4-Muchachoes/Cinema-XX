@@ -32,9 +32,17 @@ public class DataSetup implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Cinema cinema1 = cinemaRepo.save(new Cinema(null, "Elton Jones"));
         Cinema cinema2 = cinemaRepo.save(new Cinema(null, "Big Joe"));
+        Cinema cinema3 = cinemaRepo.save(new Cinema(null, "TigerHall"));
+        Cinema cinema4 = cinemaRepo.save(new Cinema(null, "Simpsons"));
+        Cinema cinema5 = cinemaRepo.save(new Cinema(null, "Magic"));
 
         Theater theater1=theaterRepo.save(new Theater(null, "Marriot", cinema1));
         Theater theater2=theaterRepo.save(new Theater(null,"Red", cinema2));
+        Theater theater3=theaterRepo.save(new Theater(null,"Hilton", cinema3));
+        Theater theater4=theaterRepo.save(new Theater(null,"Master", cinema4));
+        Theater theater5=theaterRepo.save(new Theater(null,"Penelope", cinema5));
+        Theater theater6=theaterRepo.save(new Theater(null,"Sparta", cinema5));
+        Theater theater7=theaterRepo.save(new Theater(null,"Junior", cinema4));
 
         Movie movie1 = movieRepo.save(new Movie(null,"Ironman","12+","Brand Pit","Very good",95, "https://youtu.be/8ugaeA-nMTc","https://www.imdb.com/title/tt0371746/mediaviewer/rm1544850432/?ref_=tt_ov_i","https://www.imdb.com/title/tt0371746/mediaviewer/rm320113664/?ref_=ext_shr_lnk"));
         Movie movie2 = movieRepo.save(new Movie(null,"Spiderman","12+","Cameron Diaz","Amazing",98,"https://www.youtube.com/watch?v=TYMMOjBUPMM","https://m.imdb.com/title/tt0145487/mediaviewer/rm3632146944/?fbclid=IwAR1R_iqLbOlVBVZ0IosrxRXQ89blCJKmarwSInP7MZEzCWS-B6JXoM73rGc","https://m.imdb.com/title/tt0145487/mediaviewer/rm1262040064/"));
@@ -50,5 +58,11 @@ public class DataSetup implements CommandLineRunner {
 
         Screening screening1=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie1, theater1));
         Screening screening2=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie2, theater2));
+        Screening screening3=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie4, theater1));
+        Screening screening4=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie10, theater2));
+        Screening screening5=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie7, theater2));
+        Screening screening6=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie9, theater2));
+        Screening screening7=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie8, theater2));
+        Screening screening8=screeningRepo.save(new Screening(null, LocalDateTime.now(), movie6, theater2));
     }
 }
