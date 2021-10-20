@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Data
 public class AddUserController {
 
-    private  final UserService userService;
-    private  final PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    @PostMapping(path = "/api/new_user")
+    @PostMapping(path = "/api/public/user")
     private User addUser(@RequestParam String username,@RequestParam String password){
         User user = new User(username, password);
         Role role1 =new Role(Role.User);

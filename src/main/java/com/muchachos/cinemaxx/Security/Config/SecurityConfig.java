@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
@@ -33,6 +34,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserRepo userRepo;
     private final JwtTokenFilter jwtTokenFilter;
 
+    private static final String[] AUTH_LIST = {
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
 
     public SecurityConfig(Logger logger, UserRepo userRepo, JwtTokenFilter jwtTokenFilter) {
         super();
@@ -86,6 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Public endpoints
                 .antMatchers("/api/public/**").permitAll()
                 .antMatchers("/api/new_user").permitAll()
+                .antMatchers(AUTH_LIST).permitAll()
 
                 // Restricted endpoints
                 .antMatchers("/api/user/**").hasRole(Role.User)

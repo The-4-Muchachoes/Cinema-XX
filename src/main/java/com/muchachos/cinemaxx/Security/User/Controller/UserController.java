@@ -32,7 +32,6 @@ public class UserController {
 
     ModelMapper modelMapper = new ModelMapper();
 
-
     public UserController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;

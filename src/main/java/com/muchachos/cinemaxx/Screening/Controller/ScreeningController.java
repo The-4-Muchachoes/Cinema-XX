@@ -49,7 +49,7 @@ public class ScreeningController {
         return screeningService.editScreeningStartTime(dto);
     }
 
-    @DeleteMapping(path = "/api/client_Admin/screenings/{id}")
+    @DeleteMapping(path = "/api/client_admin/screenings/{id}")
     private ResponseEntity<?> deleteScreening(@PathVariable int id) {
         return screeningService.deleteScreening(id);
     }

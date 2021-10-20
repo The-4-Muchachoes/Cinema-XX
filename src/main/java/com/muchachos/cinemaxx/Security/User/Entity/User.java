@@ -32,7 +32,6 @@ public class User implements UserDetails, Serializable {
     @ElementCollection
     private Set<Role> authorities = new HashSet<>();
 
-
     public User(String username, String password) {
         this.username = username;
         this.password = password;

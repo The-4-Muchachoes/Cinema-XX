@@ -24,7 +24,7 @@ public class SeatController {
         modelMapper = new ModelMapper();
     }
 
-    @GetMapping(path = "user/seats/{screening_id}")
+    @GetMapping(path = "public/seats/{screening_id}")
     private ResponseEntity<?> getSeatingAvailability(@PathVariable int screening_id) {
         List<SeatResponse> seats = new ArrayList<>();
         for (Seat seat : seatService.getSeatsByScreeningId(screening_id))
@@ -33,7 +33,7 @@ public class SeatController {
     }
 
     @PutMapping(path = "user/seats")
-    private ResponseEntity<?> changeAllSeatStatusById(EditSeatsRequest dto) {
+    private ResponseEntity<?> changeSeatStatusByIds(EditSeatsRequest dto) {
         return seatService.changeSeatStatus(seatService.getAllSeatsById(dto.getSeatIds()), dto.getStatus());
     }
 

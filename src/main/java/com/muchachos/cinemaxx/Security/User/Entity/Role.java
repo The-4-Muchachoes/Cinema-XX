@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
