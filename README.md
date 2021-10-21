@@ -23,6 +23,10 @@ team members polish up their code.
 
 ***
 **Alex**
+
+Responsible for designing and implementing the ERD (Together with Peri).
+Lead developer on Security Branch (Implmenting Spring security with JWT).   
+
 ***
 **Peri**
 ***
