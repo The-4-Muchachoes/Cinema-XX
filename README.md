@@ -29,8 +29,10 @@ Lead developer on Security Branch (Implmenting Spring security with JWT).
 
 ***
 **Peri**
+
 Designing and implementing the ERD (With Alex).Implement mainly  endpoints 1,2 and 6 .
 I have also done some pair coding with Lars and Alex.
+
 ***
 **Chris**
 ***
