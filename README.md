@@ -35,5 +35,8 @@ I have also done some pair coding with Lars and Alex.
 
 ***
 **Chris**
-***
+Was the Scrum master throughout the two sprints and had originally coded endpoint 4. Was also 
+in charge of putting together all required documentation and worked with Lars on endpoint 8.
+
+
 **Mahfuzur**
