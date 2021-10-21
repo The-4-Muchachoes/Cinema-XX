@@ -40,3 +40,5 @@ in charge of putting together all required documentation and worked with Lars on
 
 
 **Mahfuzur**
+- Sprint 1: Gathered informations about movie and details and put it on a spreadsheet of excel. Solved the Endponit- 4 with collaboration with chris
+- Sprint 2: Gathered more informations , trailers, posters and images and added to the program to get movie inf
