@@ -4,6 +4,7 @@ import com.muchachos.cinemaxx.Seat.DTO.EditSeatsRequest;
 import com.muchachos.cinemaxx.Seat.DTO.SeatResponse;
 import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import com.muchachos.cinemaxx.Seat.Service.SeatService;
+import io.swagger.annotations.Api;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "Seats")
 public class SeatController {
 
     private final SeatService seatService;

@@ -5,6 +5,7 @@ import com.muchachos.cinemaxx.Screening.DTO.EditScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Service.ScreeningServiceImpl;
 import com.muchachos.cinemaxx.Security.User.Entity.Role;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "Screenings")
 public class ScreeningController {
 
     @Autowired

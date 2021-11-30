@@ -2,6 +2,7 @@ package com.muchachos.cinemaxx.Movie.Controller;
 
 import com.muchachos.cinemaxx.Movie.DTO.MovieDTO;
 import com.muchachos.cinemaxx.Movie.Service.MovieServiceImpl;
+import io.swagger.annotations.Api;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "Movies")
 public class MovieController {
     ModelMapper modelMapper = new ModelMapper();
 

@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Security.User.Entity;
 
+import com.muchachos.cinemaxx.Booking.Entity.Booking;
 import com.muchachos.cinemaxx.Security.User.DTO.LoginRequest;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -32,6 +33,9 @@ public class User implements UserDetails, Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Booking> bookings;
 
     public User(String username, String password) {
         this.username = username;
