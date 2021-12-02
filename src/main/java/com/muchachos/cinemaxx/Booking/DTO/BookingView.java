@@ -3,6 +3,7 @@ package com.muchachos.cinemaxx.Booking.DTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.muchachos.cinemaxx.Booking.Entity.Booking;
 import com.muchachos.cinemaxx.Seat.DTO.SeatResponse;
+import com.muchachos.cinemaxx.Security.User.DTO.UserResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,4 +21,5 @@ public class BookingView {
     private List<SeatResponse> seats = new ArrayList<>();
     private BookingScreeningDTO screening;
     private Booking.Status status;
+    private UserResponse user;
 }

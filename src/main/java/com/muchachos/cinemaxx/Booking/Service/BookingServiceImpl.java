@@ -12,6 +12,8 @@ import com.muchachos.cinemaxx.Seat.Entity.Seat;
 import com.muchachos.cinemaxx.Seat.Repo.SeatRepo;
 import com.muchachos.cinemaxx.Seat.Service.SeatService;
 
+import com.muchachos.cinemaxx.Security.User.DTO.UserResponse;
+import com.muchachos.cinemaxx.Security.User.Entity.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
@@ -43,9 +45,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseEntity<BookingView> createBooking(CreateBookingRequest dto) {
+    public ResponseEntity<BookingView> createBooking(User user, CreateBookingRequest dto) {
 
         Booking booking = modelMapper.map(dto, Booking.class);
+        booking.setUser(user);
         booking.setSeats(seatRepo.findAllById(dto.getSeatIds()));
         booking.setScreening(screeningRepo.getById(dto.getScreeningId()));
         booking.setStatus(Booking.Status.CONFIRMED);
@@ -58,6 +61,7 @@ public class BookingServiceImpl implements BookingService {
 
         BookingView bookingView = modelMapper.map(bookingRepo.save(booking), BookingView.class);
         bookingView.setScreening(new BookingScreeningDTO());
+        bookingView.setUser(modelMapper.map(user, UserResponse.class));
 
         bookingView.getScreening().setMovie(booking.getScreening().getMovie().getTitle());
         bookingView.getScreening().setTheater(booking.getScreening().getTheater().getName());
