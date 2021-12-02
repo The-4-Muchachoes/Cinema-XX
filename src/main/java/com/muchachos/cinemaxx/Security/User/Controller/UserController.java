@@ -3,6 +3,7 @@ package com.muchachos.cinemaxx.Security.User.Controller;
 
 import com.muchachos.cinemaxx.Security.Config.JwtTokenUtil;
 import com.muchachos.cinemaxx.Security.User.DTO.LoginRequest;
+import com.muchachos.cinemaxx.Security.User.DTO.LoginResponse;
 import com.muchachos.cinemaxx.Security.User.Entity.Role;
 import com.muchachos.cinemaxx.Security.User.Entity.User;
 import com.muchachos.cinemaxx.Security.User.DTO.UserResponse;
@@ -20,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Api(tags = "Authentication")
@@ -45,7 +48,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody @Valid User userRequest) {
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody @Valid User userRequest,
+            HttpServletResponse response) {
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(
@@ -55,14 +60,23 @@ public class UserController {
                     );
 
             User user = (User) authenticate.getPrincipal();
-            System.out.println(user.getAuthorities().toString());
+            String token = jwtTokenUtil.generateAccessToken(user);
+
+            LoginResponse loginResponse = modelMapper.map(user, LoginResponse.class);
+            loginResponse.setAccessToken(token);
+
+//            Cookie cookie = new Cookie("token", token);
+//            cookie.setMaxAge(7 * 24 * 60 * 60);
+//            cookie.setPath("/");
+//            cookie.setSecure(false);
+//            response.addCookie(cookie);
 
             return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,
-                            jwtTokenUtil.generateAccessToken(user)
+                            token
                     )
-                    .body(modelMapper.map(user, UserResponse.class));
+                    .body(loginResponse);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

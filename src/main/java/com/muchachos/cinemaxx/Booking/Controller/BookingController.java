@@ -5,6 +5,7 @@ import com.muchachos.cinemaxx.Booking.Service.BookingService;
 import com.muchachos.cinemaxx.Security.User.Entity.User;
 import com.muchachos.cinemaxx.Security.User.Service.UserService;
 import io.swagger.annotations.Api;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,9 @@ public class BookingController {
     @PostMapping(path="user/bookings")
     private ResponseEntity<?> createBooking(
             @RequestHeader("Authorization") String token,
-            CreateBookingRequest dto){
+            @RequestBody CreateBookingRequest dto){
 
+        System.out.println(token);
         User user = userService.getAuthenticatedUser(token);
 
         return bookingService.createBooking(user, dto);
@@ -34,7 +36,7 @@ public class BookingController {
 
     @PutMapping(path = "user/bookings/{id}")
     private ResponseEntity<?> cancelBooking(
-            @RequestHeader("Authorization") String token,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
             @PathVariable int id) {
 
         User user = userService.getAuthenticatedUser(token);

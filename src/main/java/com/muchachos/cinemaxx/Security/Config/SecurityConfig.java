@@ -19,9 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
@@ -121,9 +124,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.setAllowedOriginPatterns(List.of("*"));
+//        config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
+        config.addAllowedHeader("Authorization");
         config.addAllowedMethod("*");
+        config.setMaxAge(3600L); //1 hour
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
