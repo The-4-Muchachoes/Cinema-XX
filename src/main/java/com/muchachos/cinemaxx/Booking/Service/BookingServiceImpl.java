@@ -17,8 +17,10 @@ import com.muchachos.cinemaxx.Security.User.Entity.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -70,9 +72,13 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseEntity<?> cancelBooking(int id) {
+    public ResponseEntity<?> cancelBooking(User user, int id) {
         Booking booking = bookingRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No booking exists by that ID"));
+
+        if (!booking.getUser().equals(user))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
         booking.setStatus(Booking.Status.CANCELLED);
 
         seatService.changeSeatStatus(booking.getSeats(), Seat.Status.FREE);

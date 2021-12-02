@@ -33,7 +33,12 @@ public class BookingController {
     }
 
     @PutMapping(path = "user/bookings/{id}")
-    private ResponseEntity<?> cancelBooking(@PathVariable int id) {
-        return bookingService.cancelBooking(id);
+    private ResponseEntity<?> cancelBooking(
+            @RequestHeader("Authorization") String token,
+            @PathVariable int id) {
+
+        User user = userService.getAuthenticatedUser(token);
+
+        return bookingService.cancelBooking(user, id);
     }
 }

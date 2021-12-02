@@ -8,6 +8,6 @@ import org.springframework.http.ResponseEntity;
 public interface BookingService {
 
     ResponseEntity<BookingView> createBooking(User user, CreateBookingRequest dto);
-    ResponseEntity<?> cancelBooking(int id);
+    ResponseEntity<?> cancelBooking(User user, int id);
 
 }
