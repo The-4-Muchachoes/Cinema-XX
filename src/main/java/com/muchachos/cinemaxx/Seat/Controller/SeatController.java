@@ -35,7 +35,7 @@ public class SeatController {
     }
 
     @PutMapping(path = "user/seats")
-    private ResponseEntity<?> changeSeatStatusByIds(EditSeatsRequest dto) {
+    private ResponseEntity<?> changeSeatStatusByIds(@RequestBody EditSeatsRequest dto) {
         return seatService.changeSeatStatus(seatService.getAllSeatsById(dto.getSeatIds()), dto.getStatus());
     }
 

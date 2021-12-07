@@ -26,6 +26,13 @@ public class ScreeningController {
     @Autowired
     ScreeningServiceImpl screeningService;
 
+    @GetMapping("/api/public/screenings/{id}")
+    private ResponseEntity<?> getScreeningById(@PathVariable int id) {
+        ScreeningView dto = screeningService.getScreeningById(id);
+
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping(path = "/api/public/screenings/{cinemaId}/{date}")
     private Iterable<ScreeningView> getScreeningsByCinemaAndDate(@PathVariable int cinemaId, @PathVariable String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

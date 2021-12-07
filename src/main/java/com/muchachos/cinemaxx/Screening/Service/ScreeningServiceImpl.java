@@ -47,6 +47,13 @@ public class ScreeningServiceImpl implements ScreeningService {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
+    public ScreeningView getScreeningById(int id) {
+        Screening screening = screeningRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return modelMapper.map(screening, ScreeningView.class);
+    }
+
     @Override
     public List<ScreeningView> getTitleTimeAndRatingByCinemaAndDate(int cinemaId, LocalDate startDate, LocalDate endDate) {
         List<Theater> theaters = theaterRepo.findAllByCinema_Id(cinemaId);
