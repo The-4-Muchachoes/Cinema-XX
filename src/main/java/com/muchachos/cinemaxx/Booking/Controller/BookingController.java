@@ -23,12 +23,18 @@ public class BookingController {
         this.userService = userService;
     }
 
+    @GetMapping("user/bookings")
+    private ResponseEntity<?> getAuthenticatedUsersBookings(@RequestHeader("Authorization") String token) {
+        User user = userService.getAuthenticatedUser(token);
+
+        return bookingService.getBookingsByUser(user);
+    }
+
     @PostMapping(path="user/bookings")
     private ResponseEntity<?> createBooking(
             @RequestHeader("Authorization") String token,
             @RequestBody CreateBookingRequest dto){
 
-        System.out.println(token);
         User user = userService.getAuthenticatedUser(token);
 
         return bookingService.createBooking(user, dto);

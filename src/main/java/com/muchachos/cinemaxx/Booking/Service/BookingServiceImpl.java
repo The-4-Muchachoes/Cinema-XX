@@ -1,5 +1,6 @@
 package com.muchachos.cinemaxx.Booking.Service;
 
+import com.muchachos.cinemaxx.Booking.DTO.BookingResponse;
 import com.muchachos.cinemaxx.Booking.DTO.BookingView;
 import com.muchachos.cinemaxx.Booking.DTO.BookingScreeningDTO;
 import com.muchachos.cinemaxx.Booking.DTO.CreateBookingRequest;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -44,6 +46,16 @@ public class BookingServiceImpl implements BookingService {
         this.screeningRepo = screeningRepo;
         this.seatService = seatService;
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    }
+
+    @Override
+    public ResponseEntity<List<BookingResponse>> getBookingsByUser(User user) {
+        List<Booking> bookings = bookingRepo.findAllByUserId(user.getId());
+
+        return ResponseEntity.ok(bookings
+                .stream()
+                .map(booking -> modelMapper.map(booking, BookingResponse.class))
+                .collect(Collectors.toList()));
     }
 
     @Override
