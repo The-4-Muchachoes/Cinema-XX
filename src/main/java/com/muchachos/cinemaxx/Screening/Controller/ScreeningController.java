@@ -4,17 +4,14 @@ import com.muchachos.cinemaxx.Screening.DTO.CreateScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.EditScreeningRequest;
 import com.muchachos.cinemaxx.Screening.DTO.ScreeningView;
 import com.muchachos.cinemaxx.Screening.Service.ScreeningServiceImpl;
-import com.muchachos.cinemaxx.Security.User.Entity.Role;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

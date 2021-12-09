@@ -57,7 +57,7 @@ public class DataSetup implements CommandLineRunner {
 
         Movie movie1 = movieRepo.save(new Movie(null, "Ironman", "12+", "Brand Pit", "Very good", 95, "https://youtu.be/8ugaeA-nMTc", "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_FMjpg_UY711_.jpg", "https://m.media-amazon.com/images/M/MV5BNzgwOWU2YTAtYWEwNy00NDBkLThkMjktYjNkOTZmOWIwYzg4XkEyXkFqcGdeQXVyNTU5MzI1OTM@._V1_FMjpg_UX600_.jpg"));
         Movie movie2 = movieRepo.save(new Movie(null, "Spiderman", "12+", "Cameron Diaz", "Amazing", 98, "https://www.youtube.com/watch?v=TYMMOjBUPMM", "https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_.jpg", "https://m.media-amazon.com/images/M/MV5BMjMxMDAwMjUxOV5BMl5BanBnXkFtZTgwMDI0ODkxMjI@._V1_FMjpg_UX1024_.jpg"));
-        Movie movie3 = movieRepo.save(new Movie(null, "The Live of Others", "R", "Ulrich Muhe", "Thriller", 137, "https://www.youtube.com/watch?v=n3_iLOp6IhM", "https://m.media-amazon.com/images/M/MV5BOThkM2EzYmMtNDE3NS00NjlhLTg4YzktYTdhNzgyOWY3ZDYzXkEyXkFqcGdeQXVyNzQzNzQxNzI@._V1_FMjpg_UY679_.jpg", "https://m.media-amazon.com/images/M/MV5BMTE5MTYzMzg4OV5BMl5BanBnXkFtZTYwNjAyMTg2._V1_.jpg"));
+        Movie movie3 = movieRepo.save(new Movie(null, "The Life of Others", "R", "Ulrich Muhe", "Thriller", 137, "https://www.youtube.com/watch?v=n3_iLOp6IhM", "https://m.media-amazon.com/images/M/MV5BOThkM2EzYmMtNDE3NS00NjlhLTg4YzktYTdhNzgyOWY3ZDYzXkEyXkFqcGdeQXVyNzQzNzQxNzI@._V1_FMjpg_UY679_.jpg", "https://m.media-amazon.com/images/M/MV5BMTE5MTYzMzg4OV5BMl5BanBnXkFtZTYwNjAyMTg2._V1_.jpg"));
         Movie movie4 = movieRepo.save(new Movie(null, "Inception", "PG-13", "Leonardo DiCaprio", "Thriller", 148, "https://www.youtube.com/watch?v=YoHD9XEInc0", "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg", "https://m.media-amazon.com/images/M/MV5BMTk1MzExMjM5Nl5BMl5BanBnXkFtZTcwNjI2NjQ0Mw@@._V1_.jpg"));
         Movie movie5 = movieRepo.save(new Movie(null, "Queen of Katwe", "PG", "Madina Nalwanga", "Inspiring", 124, "https://www.youtube.com/watch?v=z4l3-_yub5A", "https://m.media-amazon.com/images/M/MV5BNzQ0MDg2NTY4N15BMl5BanBnXkFtZTgwOTk2NzU3OTE@._V1_.jpg", "https://m.media-amazon.com/images/M/MV5BMjc2MmU4NDYtNDA5OS00ZDgxLWE1MjMtMjA2OGMyODczODA2XkEyXkFqcGdeQXVyNjAwNTYwNDg@._V1_.jpg"));
         Movie movie6 = movieRepo.save(new Movie(null, "A Separation", "PG-13", "Payman Maadi", "Genre Drama", 122, "https://www.youtube.com/watch?v=58Onuy5USTc", "https://m.media-amazon.com/images/M/MV5BN2JmMjViMjMtZTM5Mi00ZGZkLTk5YzctZDg5MjFjZDE4NjNkXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg", "https://m.media-amazon.com/images/M/MV5BNzU4YWRkYTgtMzYzZS00ZjA3LWJiZDItOGI5MTM3MTE5MTBhXkEyXkFqcGdeQXVyNjkxOTM4ODY@._V1_.jpg"));
@@ -68,14 +68,14 @@ public class DataSetup implements CommandLineRunner {
 
 
         List<CreateScreeningRequest> screenings = new ArrayList<>();
-        screenings.add(new CreateScreeningRequest(1, 1, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(2, 2, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(3, 3, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(4, 4, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(5, 5, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(6, 6, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(7, 7, LocalDateTime.now()));
-        screenings.add(new CreateScreeningRequest(8, 8, LocalDateTime.now()));
+        screenings.add(new CreateScreeningRequest(1, 1, LocalDateTime.of(2021, 12, 14, 21, 0)));
+        screenings.add(new CreateScreeningRequest(2, 2, LocalDateTime.of(2021, 12, 14, 18, 0)));
+        screenings.add(new CreateScreeningRequest(3, 3, LocalDateTime.of(2021, 12, 14, 20, 0)));
+        screenings.add(new CreateScreeningRequest(4, 4, LocalDateTime.of(2021, 12, 14, 21, 0)));
+        screenings.add(new CreateScreeningRequest(5, 5, LocalDateTime.of(2021, 12, 14, 18, 0)));
+        screenings.add(new CreateScreeningRequest(6, 6, LocalDateTime.of(2021, 12, 14, 16, 0)));
+        screenings.add(new CreateScreeningRequest(7, 7, LocalDateTime.of(2021, 12, 14, 20, 0)));
+        screenings.add(new CreateScreeningRequest(8, 8, LocalDateTime.of(2021, 12, 14, 19, 0)));
 
         for (CreateScreeningRequest screening : screenings)
             screeningService.addScreening(screening);
